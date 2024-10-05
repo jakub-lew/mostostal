@@ -1,10 +1,17 @@
 <script setup lang="ts">
-import { Viewer, XKTLoaderPlugin, WebIFCLoaderPlugin } from '@xeokit/xeokit-sdk';
+import { Viewer, XKTLoaderPlugin } from '@xeokit/xeokit-sdk';
 import { onMounted } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
+import { allowedModels } from '@/utils/config';
 
 const route = useRoute()
-const fileName = route.params['name']
+const router = useRouter()
+const fileName = route.params['name'] as string
+
+if (!allowedModels.includes(fileName)) {
+  console.warn("File name not supported")
+  router.push({name: "home"})
+}
 
 onMounted(() => {
     const viewer = new Viewer({
