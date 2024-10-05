@@ -71,7 +71,7 @@ export class aStarClass {
     }
     static test() {
         const graph = GridGen.DuplexToGraph();
-        return aStarClass.main(graph, 0, 400);
+        return aStarClass.main(graph, 0, 2190);
     }
 
 }

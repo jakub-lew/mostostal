@@ -297,7 +297,21 @@ export class GridGen {
         const lines = GridGen.graphEdgesToLines(graph);
         return lines;
     }
+    static DuplexToNodes(){
+        const graph = this.DuplexToGraph();
+        const nodes = graph.nodes.map((node) => {
+            return {
+                nr: node.nr,
+                x: node.x,
+                y: node.y,
+                z: node.z,
+            }
+        });
+        return nodes;
+    }
 }
 //console.log(GridGen.DuplexToLines());
+const obj = GridGen.DuplexToNodes();
+const br = true;
 
 //console.log(GridGen.exportToJSON(GridGen.generateGrid([5, 5, 5], 10, 2, 2, 2)))
