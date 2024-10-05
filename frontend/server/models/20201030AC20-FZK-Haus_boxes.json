@@ -1,0 +1,1082 @@
+{
+  "roomBBox": {
+    "x": -3,
+    "y": -10,
+    "z": -1,
+    "xDist": 18,
+    "yDist": 23,
+    "zDist": 4.5600000000000005
+  },
+  "obstacleBBoxes": [
+    {
+      "x": -3,
+      "y": -3,
+      "z": -1,
+      "xDist": 18,
+      "yDist": 16,
+      "zDist": 1,
+      "type": "IfcSite",
+      "penetrable": false
+    },
+    {
+      "x": -0.8539693928,
+      "y": -0.741660960048,
+      "z": 0,
+      "xDist": 1.708919702312,
+      "yDist": 1.5964267229679998,
+      "zDist": 3.56,
+      "type": "IfcStair",
+      "penetrable": false
+    },
+    {
+      "x": 0,
+      "y": -0.24,
+      "z": 0,
+      "xDist": 4.29,
+      "yDist": 0.24,
+      "zDist": 2.5,
+      "type": "IfcWallStandardCase",
+      "penetrable": false
+    },
+    {
+      "x": 0.3,
+      "y": 0,
+      "z": 0,
+      "xDist": 5.69,
+      "yDist": 0.24,
+      "zDist": 2.5,
+      "type": "IfcWallStandardCase",
+      "penetrable": false
+    },
+    {
+      "x": -0.4425,
+      "y": -0.24,
+      "z": 0,
+      "xDist": 0.885,
+      "yDist": 0.48,
+      "zDist": 2.01,
+      "type": "IfcOpeningElement",
+      "penetrable": true
+    },
+    {
+      "x": 0,
+      "y": -0.1,
+      "z": 0,
+      "xDist": 0.885,
+      "yDist": 0.1,
+      "zDist": 2.01,
+      "type": "IfcDoor",
+      "penetrable": true
+    },
+    {
+      "x": 0.3,
+      "y": 0,
+      "z": 0,
+      "xDist": 3.71,
+      "yDist": 0.24,
+      "zDist": 2.5,
+      "type": "IfcWallStandardCase",
+      "penetrable": false
+    },
+    {
+      "x": 0.3,
+      "y": 0,
+      "z": 0,
+      "xDist": 7.11,
+      "yDist": 0.24,
+      "zDist": 2.5,
+      "type": "IfcWallStandardCase",
+      "penetrable": false
+    },
+    {
+      "x": -0.4425,
+      "y": -0.24,
+      "z": 0,
+      "xDist": 0.885,
+      "yDist": 0.48,
+      "zDist": 2.01,
+      "type": "IfcOpeningElement",
+      "penetrable": true
+    },
+    {
+      "x": -0.4425,
+      "y": -0.24,
+      "z": 0,
+      "xDist": 0.885,
+      "yDist": 0.48,
+      "zDist": 2.01,
+      "type": "IfcOpeningElement",
+      "penetrable": true
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "xDist": 0.885,
+      "yDist": 0.1,
+      "zDist": 2.01,
+      "type": "IfcDoor",
+      "penetrable": true
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "xDist": 0.885,
+      "yDist": 0.1,
+      "zDist": 2.01,
+      "type": "IfcDoor",
+      "penetrable": true
+    },
+    {
+      "x": -0.1,
+      "y": 0,
+      "z": -0.24,
+      "xDist": 0.2,
+      "yDist": 4.07996060195,
+      "zDist": 0.24,
+      "type": "IfcBeam",
+      "penetrable": false
+    },
+    {
+      "x": 0.3,
+      "y": -0.24,
+      "z": 0,
+      "xDist": 3.5,
+      "yDist": 0.24,
+      "zDist": 2.5,
+      "type": "IfcWallStandardCase",
+      "penetrable": false
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "xDist": 5.45,
+      "yDist": 4.05,
+      "zDist": 2.5,
+      "type": "IfcSpace",
+      "penetrable": true
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "xDist": 3.71,
+      "yDist": 3.37,
+      "zDist": 2.5,
+      "type": "IfcSpace",
+      "penetrable": true
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "xDist": 3.71,
+      "yDist": 3.5,
+      "zDist": 2.5,
+      "type": "IfcSpace",
+      "penetrable": true
+    },
+    {
+      "x": 0,
+      "y": -0.3,
+      "z": 0,
+      "xDist": 10,
+      "yDist": 0.3,
+      "zDist": 2.7,
+      "type": "IfcWallStandardCase",
+      "penetrable": false
+    },
+    {
+      "x": -1,
+      "y": -0.47,
+      "z": 0,
+      "xDist": 2,
+      "yDist": 0.6,
+      "zDist": 1.2,
+      "type": "IfcOpeningElement",
+      "penetrable": true
+    },
+    {
+      "x": -1,
+      "y": -0.47,
+      "z": 0,
+      "xDist": 2,
+      "yDist": 0.6,
+      "zDist": 1.2,
+      "type": "IfcOpeningElement",
+      "penetrable": true
+    },
+    {
+      "x": -0.505,
+      "y": -0.6,
+      "z": 0,
+      "xDist": 1.01,
+      "yDist": 0.6,
+      "zDist": 2.01,
+      "type": "IfcOpeningElement",
+      "penetrable": true
+    },
+    {
+      "x": 0,
+      "y": -0.195,
+      "z": 0,
+      "xDist": 2,
+      "yDist": 0.07500000000000001,
+      "zDist": 1.2,
+      "type": "IfcWindow",
+      "penetrable": true
+    },
+    {
+      "x": 0,
+      "y": -0.195,
+      "z": 0,
+      "xDist": 2,
+      "yDist": 0.07500000000000001,
+      "zDist": 1.2,
+      "type": "IfcWindow",
+      "penetrable": true
+    },
+    {
+      "x": 0,
+      "y": 0.16,
+      "z": 0,
+      "xDist": 1.01,
+      "yDist": 0.18999999999999997,
+      "zDist": 2.01,
+      "type": "IfcDoor",
+      "penetrable": true
+    },
+    {
+      "x": 0,
+      "y": -0.3,
+      "z": 0,
+      "xDist": 12,
+      "yDist": 0.3,
+      "zDist": 2.7,
+      "type": "IfcWallStandardCase",
+      "penetrable": false
+    },
+    {
+      "x": -1,
+      "y": -0.47,
+      "z": 0,
+      "xDist": 2,
+      "yDist": 0.6,
+      "zDist": 1.2,
+      "type": "IfcOpeningElement",
+      "penetrable": true
+    },
+    {
+      "x": -1,
+      "y": -0.47,
+      "z": 0,
+      "xDist": 2,
+      "yDist": 0.6,
+      "zDist": 1.2,
+      "type": "IfcOpeningElement",
+      "penetrable": true
+    },
+    {
+      "x": -1.005,
+      "y": -0.6,
+      "z": 0,
+      "xDist": 2.01,
+      "yDist": 0.6,
+      "zDist": 2.375,
+      "type": "IfcOpeningElement",
+      "penetrable": true
+    },
+    {
+      "x": 0,
+      "y": -0.195,
+      "z": 0,
+      "xDist": 2,
+      "yDist": 0.07500000000000001,
+      "zDist": 1.2,
+      "type": "IfcWindow",
+      "penetrable": true
+    },
+    {
+      "x": 0,
+      "y": -0.195,
+      "z": 0,
+      "xDist": 2,
+      "yDist": 0.07500000000000001,
+      "zDist": 1.2,
+      "type": "IfcWindow",
+      "penetrable": true
+    },
+    {
+      "x": 0,
+      "y": 0.12,
+      "z": 0,
+      "xDist": 2.01,
+      "yDist": 0.20500000000000002,
+      "zDist": 2.375,
+      "type": "IfcDoor",
+      "penetrable": true
+    },
+    {
+      "x": 0,
+      "y": -0.3,
+      "z": 0,
+      "xDist": 10,
+      "yDist": 0.3,
+      "zDist": 2.7,
+      "type": "IfcWallStandardCase",
+      "penetrable": false
+    },
+    {
+      "x": -1,
+      "y": -0.47,
+      "z": 0,
+      "xDist": 2,
+      "yDist": 0.6,
+      "zDist": 1.2,
+      "type": "IfcOpeningElement",
+      "penetrable": true
+    },
+    {
+      "x": -1,
+      "y": -0.47,
+      "z": 0,
+      "xDist": 2,
+      "yDist": 0.6,
+      "zDist": 1.2,
+      "type": "IfcOpeningElement",
+      "penetrable": true
+    },
+    {
+      "x": 0,
+      "y": -0.195,
+      "z": 0,
+      "xDist": 2,
+      "yDist": 0.07500000000000001,
+      "zDist": 1.2,
+      "type": "IfcWindow",
+      "penetrable": true
+    },
+    {
+      "x": 0,
+      "y": -0.195,
+      "z": 0,
+      "xDist": 2,
+      "yDist": 0.07500000000000001,
+      "zDist": 1.2,
+      "type": "IfcWindow",
+      "penetrable": true
+    },
+    {
+      "x": 0,
+      "y": -0.3,
+      "z": 0,
+      "xDist": 12,
+      "yDist": 0.3,
+      "zDist": 2.7,
+      "type": "IfcWallStandardCase",
+      "penetrable": false
+    },
+    {
+      "x": -1,
+      "y": -0.47,
+      "z": 0,
+      "xDist": 2,
+      "yDist": 0.6,
+      "zDist": 1.2,
+      "type": "IfcOpeningElement",
+      "penetrable": true
+    },
+    {
+      "x": -1,
+      "y": -0.47,
+      "z": 0,
+      "xDist": 2,
+      "yDist": 0.6,
+      "zDist": 1.2,
+      "type": "IfcOpeningElement",
+      "penetrable": true
+    },
+    {
+      "x": -1,
+      "y": -0.47,
+      "z": 0,
+      "xDist": 2,
+      "yDist": 0.6,
+      "zDist": 1.2,
+      "type": "IfcOpeningElement",
+      "penetrable": true
+    },
+    {
+      "x": 0,
+      "y": -0.195,
+      "z": 0,
+      "xDist": 2,
+      "yDist": 0.07500000000000001,
+      "zDist": 1.2,
+      "type": "IfcWindow",
+      "penetrable": true
+    },
+    {
+      "x": 0,
+      "y": -0.195,
+      "z": 0,
+      "xDist": 2,
+      "yDist": 0.07500000000000001,
+      "zDist": 1.2,
+      "type": "IfcWindow",
+      "penetrable": true
+    },
+    {
+      "x": 0,
+      "y": -0.195,
+      "z": 0,
+      "xDist": 2,
+      "yDist": 0.07500000000000001,
+      "zDist": 1.2,
+      "type": "IfcWindow",
+      "penetrable": true
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "xDist": 3.71,
+      "yDist": 7.005,
+      "zDist": 2.5,
+      "type": "IfcSpace",
+      "penetrable": true
+    },
+    {
+      "x": 0,
+      "y": -0.24,
+      "z": 0,
+      "xDist": 7.11,
+      "yDist": 1.74,
+      "zDist": 2.5,
+      "type": "IfcSpace",
+      "penetrable": true
+    },
+    {
+      "x": 0,
+      "y": -10,
+      "z": -0.2,
+      "xDist": 12,
+      "yDist": 10,
+      "zDist": 0.2,
+      "type": "IfcSlab",
+      "penetrable": false
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "xDist": 3.71,
+      "yDist": 4.39500000002,
+      "zDist": 2.5,
+      "type": "IfcSpace",
+      "penetrable": true
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.0399999991059,
+      "z": -0.288675134595,
+      "xDist": 5.5,
+      "yDist": 0.0799999982118,
+      "zDist": 3.3601785625550002,
+      "type": "IfcMember",
+      "penetrable": false
+    },
+    {
+      "x": 0,
+      "y": -0.0399999991059,
+      "z": -0.159999996424,
+      "xDist": 13,
+      "yDist": 0.0799999982118,
+      "zDist": 0.159999996424,
+      "type": "IfcBeam",
+      "penetrable": false
+    },
+    {
+      "x": 0,
+      "y": -0.0399999991059,
+      "z": -0.159999996424,
+      "xDist": 13,
+      "yDist": 0.0799999982118,
+      "zDist": 0.159999996424,
+      "type": "IfcBeam",
+      "penetrable": false
+    },
+    {
+      "x": 0,
+      "y": -0.0399999991059,
+      "z": -0.159999996424,
+      "xDist": 13,
+      "yDist": 0.0799999982118,
+      "zDist": 0.159999996424,
+      "type": "IfcBeam",
+      "penetrable": false
+    },
+    {
+      "x": 0,
+      "y": -0.04,
+      "z": 0,
+      "xDist": 2,
+      "yDist": 0.08,
+      "zDist": 1,
+      "type": "IfcRailing",
+      "penetrable": false
+    },
+    {
+      "x": 0,
+      "y": -0.04,
+      "z": 0,
+      "xDist": 4.29,
+      "yDist": 0.08,
+      "zDist": 1,
+      "type": "IfcRailing",
+      "penetrable": false
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": -0.2,
+      "xDist": 11.8,
+      "yDist": 9.8,
+      "zDist": 0.2,
+      "type": "IfcSlab",
+      "penetrable": false
+    },
+    {
+      "x": 7.34001030259,
+      "y": 0.2,
+      "z": -0.2,
+      "xDist": 4.25998969741,
+      "yDist": 3.71,
+      "zDist": 0.2,
+      "type": "IfcOpeningElement",
+      "penetrable": true
+    },
+    {
+      "x": -0.5,
+      "y": -5.000000000002608,
+      "z": -0.2886751345951097,
+      "xDist": 13,
+      "yDist": 5.500000000002869,
+      "zDist": 3.4063665882222063,
+      "type": "IfcSlab",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.5000000000002608,
+      "z": -0.2886751345951097,
+      "xDist": 13,
+      "yDist": 5.500000000002869,
+      "zDist": 3.4063665882222063,
+      "type": "IfcSlab",
+      "penetrable": false
+    },
+    {
+      "x": 0,
+      "y": -0.3,
+      "z": 0,
+      "xDist": 10,
+      "yDist": 0.3,
+      "zDist": 3.38675134594856,
+      "type": "IfcWallStandardCase",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.6,
+      "z": 0,
+      "xDist": 1,
+      "yDist": 0.8999999999999999,
+      "zDist": 1,
+      "type": "IfcOpeningElement",
+      "penetrable": true
+    },
+    {
+      "x": 0,
+      "y": 0.095,
+      "z": 0,
+      "xDist": 1,
+      "yDist": 0.09,
+      "zDist": 1,
+      "type": "IfcWindow",
+      "penetrable": true
+    },
+    {
+      "x": 0,
+      "y": -0.3,
+      "z": 0,
+      "xDist": 12,
+      "yDist": 0.3,
+      "zDist": 0.6732050807569755,
+      "type": "IfcWallStandardCase",
+      "penetrable": false
+    },
+    {
+      "x": 0,
+      "y": -0.3,
+      "z": 0,
+      "xDist": 10,
+      "yDist": 0.3,
+      "zDist": 3.38675134594856,
+      "type": "IfcWallStandardCase",
+      "penetrable": false
+    },
+    {
+      "x": -0.5,
+      "y": -0.6,
+      "z": 0,
+      "xDist": 1,
+      "yDist": 0.8999999999999999,
+      "zDist": 1,
+      "type": "IfcOpeningElement",
+      "penetrable": true
+    },
+    {
+      "x": 0,
+      "y": -0.205,
+      "z": 0,
+      "xDist": 1,
+      "yDist": 0.08999999999999998,
+      "zDist": 1,
+      "type": "IfcWindow",
+      "penetrable": true
+    },
+    {
+      "x": 0,
+      "y": -0.3,
+      "z": 0,
+      "xDist": 12,
+      "yDist": 0.3,
+      "zDist": 0.6732050807569755,
+      "type": "IfcWallStandardCase",
+      "penetrable": false
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "xDist": 11.4,
+      "yDist": 9.4,
+      "zDist": 3.38675134595,
+      "type": "IfcSpace",
+      "penetrable": true
+    }
+  ]
+}
