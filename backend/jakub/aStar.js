@@ -1,4 +1,9 @@
-class aStarClass {
+import { GridGen } from './gridGen.js';
+export class aStarClass {
+    static test() {
+        const graph = GridGen.DuplexToGraph();
+        return aStarClass.main(graph, 0, 400);
+    }
 }
 aStarClass.main = (graph, startNode, endNode) => {
     const IdxToCoords = (idx) => {
@@ -8,6 +13,10 @@ aStarClass.main = (graph, startNode, endNode) => {
         return y * graph.xNumber + x;
     };
     const INF = Number.MAX_SAFE_INTEGER;
+    for (const node of graph.nodes) {
+        node.pathLength = INF;
+        node.parentNd = -1;
+    }
     //define start vertex
     graph.nodes[startNode].pathLength = 0;
     const nodesToVisit = new Set();
@@ -26,7 +35,7 @@ aStarClass.main = (graph, startNode, endNode) => {
         nodesToVisit.delete(node);
         for (const edge of node.edges) {
             const neighborIdx = node.nr == edge.nodesPair[0] ? edge.nodesPair[1] : edge.nodesPair[0];
-            console.log(`Checking idx ${neighborIdx}}`);
+            // console.log(`Checking idx ${neighborIdx}}`);
             const neighborNode = graph.nodes[neighborIdx];
             const newPath = node.pathLength + edge.distance;
             if (neighborNode.pathLength == INF) {
@@ -39,10 +48,19 @@ aStarClass.main = (graph, startNode, endNode) => {
             }
         }
     }
-    for (const node of graph.nodes) {
-        console.log(`Node ${node.nr} has pathLength ${node.pathLength}`);
+    // for (const node of graph.nodes) {
+    //     console.log(`Node ${node.nr} has pathLength ${node.pathLength}`);
+    // }
+    console.log(graph.nodes[endNode].pathLength);
+    let path = [];
+    const endNd = graph.nodes[endNode];
+    let currentNd = endNd;
+    while (currentNd.nr != startNode) {
+        path.push([currentNd.x, currentNd.y, currentNd.z]);
+        currentNd = graph.nodes[currentNd.parentNd];
     }
+    path = path.reverse();
+    return path;
 };
-export {};
-//aStarClass.main();
+console.log(aStarClass.test());
 //# sourceMappingURL=aStar.js.map

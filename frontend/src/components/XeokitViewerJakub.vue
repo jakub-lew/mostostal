@@ -4,12 +4,14 @@ import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import {buildLineGeometry, buildSphereGeometry, Viewer, Mesh, ReadableGeometry, PhongMaterial} from '@xeokit/xeokit-sdk';
 import { GridGen} from '../../../backend/jakub/gridGen';
+import { aStarClass } from '../../../backend/jakub/aStar';
 import * as data from '../../../backend/jakub/exampleForTomek.json';
 //import * as obstacles from '../../../backend/dawid/bboxes-global-coordinates.json';
 // import * as obstacles from '../../../frontend/server/models/BUILDING_boxes.json';
 import * as obstacles from '../../../frontend/server/models/Duplex_boxes.json';
 import { checkLine } from '@/utils/check-line';
 import { Result } from 'postcss';
+import ColorPicker from 'primevue/colorpicker';
 
 const route = useRoute()
 const fileName = route.params['name']
@@ -92,16 +94,36 @@ let lines = [
         return checkLine(line.startPoint as [number, number, number], line.endPoint as [number, number, number] , 0.03);
      });
 
-    for (const line of [/*lines*/ graphLines].flat()) {
+    const path = aStarClass.test();
+    let pathLines = [];
+    //ITERATE over idx
+    for (let i = 0; i < path.length - 2; i++) {
+        const line = {
+            startPoint: path[i],
+            endPoint: path[i + 1]
+        };
+        pathLines.push(line);
+    }
+    pathLines = pathLines.map((line) => {
+        return {
+            startPoint: [line.startPoint[0], line.startPoint[2], -line.startPoint[1]],
+            endPoint: [line.endPoint[0], line.endPoint[2], -line.endPoint[1]]
+        }
+     });
+     console.log(pathLines);
+    for (const line of [pathLines/*lines,  graphLines*/ ].flat()) {
     new Mesh(viewer.scene, {
         geometry: new ReadableGeometry(viewer.scene, buildLineGeometry({
             startPoint: line.startPoint,
             endPoint: line.endPoint,
         })),
         material: new PhongMaterial(viewer.scene, {
-            emissive: [0, 1,]
-        })
+            emissive: [0, 1,],
+            opacity: 1        })
     });}
+
+
+
     new Mesh(viewer.scene, {
         geometry: new ReadableGeometry(viewer.scene, buildSphereGeometry({
             radius: 0.5,
@@ -115,14 +137,14 @@ let lines = [
         })
     });
 
-    // const xktLoader = new XKTLoaderPlugin(viewer);
+    const xktLoader = new XKTLoaderPlugin(viewer);
 
-    // const sceneModel = xktLoader.load({
-    //     id: "myModel",
-    //     src: `http://127.0.0.1:5200/Duplex.xkt`,
-    //     edges: true,
-    // });
-    // sceneModel.xrayed = true;
+    const sceneModel = xktLoader.load({
+        id: "myModel",
+        src: `http://127.0.0.1:5200/Duplex.xkt`,
+        edges: true,
+    });
+    sceneModel.xrayed = true;
 
 });
 

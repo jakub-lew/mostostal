@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
-    "run": "node gridGen.js"
+    "run": "node gridGen.js",
+    "astar": "node astar.js"
   },
   "author": "",
   "license": "ISC"

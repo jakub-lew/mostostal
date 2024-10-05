@@ -149,8 +149,11 @@ export class GridGen {
             { startPoint: squares[0][3], endPoint: squares[1][3] },
         ];
     }
+    static DuplexToGraph() {
+        return GridGen.createGrid(obstacles.roomBBox, obstacles.obstacleBBoxes, 1);
+    }
     static DuplexToLines() {
-        const graph = GridGen.createGrid(obstacles.roomBBox, obstacles.obstacleBBoxes, 1);
+        const graph = this.DuplexToGraph();
         const lines = GridGen.graphEdgesToLines(graph);
         return lines;
     }
@@ -278,6 +281,6 @@ GridGen.generateGrid = (origin, span, xNumber, yNumber, zNumber) => {
     // graph.zNumber = oldY;
     return graph;
 };
-console.log(GridGen.DuplexToLines());
+//console.log(GridGen.DuplexToLines());
 //console.log(GridGen.exportToJSON(GridGen.generateGrid([5, 5, 5], 10, 2, 2, 2)))
 //# sourceMappingURL=gridGen.js.map
