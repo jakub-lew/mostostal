@@ -8,6 +8,7 @@ import * as data from '../../../backend/jakub/exampleForTomek.json';
 //import * as obstacles from '../../../backend/dawid/bboxes-global-coordinates.json';
 // import * as obstacles from '../../../frontend/server/models/BUILDING_boxes.json';
 import * as obstacles from '../../../frontend/server/models/Duplex_boxes.json';
+import { checkLine } from '@/utils/check-line';
 import { Result } from 'postcss';
 
 const route = useRoute()
@@ -83,6 +84,12 @@ let lines = [
             startPoint: [line.startPoint[0], line.startPoint[2], -line.startPoint[1]],
             endPoint: [line.endPoint[0], line.endPoint[2], -line.endPoint[1]]
         }
+     });
+     lines = lines.filter((line) => {
+        return checkLine(line.startPoint as [number, number, number], line.endPoint as [number, number, number] , 0.03);
+     });
+     graphLines = graphLines.filter((line) => {
+        return checkLine(line.startPoint as [number, number, number], line.endPoint as [number, number, number] , 0.03);
      });
 
     for (const line of [lines, graphLines].flat()) {

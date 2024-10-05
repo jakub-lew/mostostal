@@ -290,7 +290,7 @@ export class GridGen {
 
     }
     static DuplexToLines() {
-        const graph = GridGen.createGrid(obstacles.roomBBox, []/*obstacles.obstacleBBoxes*/, 3);
+        const graph = GridGen.createGrid(obstacles.roomBBox, []/*obstacles.obstacleBBoxes*/, 1);
         const lines = GridGen.graphEdgesToLines(graph);
         return lines;
     }

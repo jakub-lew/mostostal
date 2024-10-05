@@ -10,12 +10,8 @@ export function checkLine(startPoint: [number, number, number], endPoint: [numbe
     const xAbs = Math.abs(x);
     const yAbs = Math.abs(y);
     const zAbs = Math.abs(z);
-    if (xAbs > yAbs && xAbs > zAbs) {
-        return xAbs / Math.sqrt(x * x + y * y + z * z) > factor;
+    if((xAbs < factor && yAbs < factor) || (xAbs < factor && zAbs < factor) || (yAbs < factor && zAbs < factor)){
+        return true;
     }
-    if (yAbs > xAbs && yAbs > zAbs) {
-        return yAbs / Math.sqrt(x * x + y * y + z * z) > factor;
-    }
-    return zAbs / Math.sqrt(x * x + y * y + z * z) > factor;
 
 }
