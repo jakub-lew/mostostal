@@ -37,8 +37,8 @@ def get_bboxes(ifc_path):
     bboxes = []
     types = []
     settings = ifcopenshell.geom.settings()
-    # settings.set("building-local-placement", True)
-    # settings.set("use-world-coords", True)
+    settings.set("building-local-placement", True)
+    settings.set("use-world-coords", True)
     iterator = ifcopenshell.geom.iterator(
         settings, model, include=model.by_type("IfcProduct"), exclude=None
     )
@@ -80,7 +80,7 @@ def get_bboxes(ifc_path):
         "obstacleBBoxes": obstacleBBoxes,
     }
     name = os.path.splitext(os.path.basename(ifc_path))[0]
-    with open(f"bboxes-{name}.json", "w") as f:
+    with open(f"../../frontend/server/models/{name}_boxes.json", "w") as f:
         json.dump(result, f, indent=2)
     return result
 
