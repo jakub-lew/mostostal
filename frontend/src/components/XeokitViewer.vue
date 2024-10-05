@@ -33,11 +33,6 @@ function drawLine(startPoint: Vector3d, endPoint: Vector3d) {
     })
 }
 
-watch(startPoint, (newVal, oldVal) => {
-  if (newVal && endPoint.value) {
-    drawLine(oldVal, newVal)
-  }
-})
 
 
 if (!allowedModels.includes(fileName)) {
@@ -46,7 +41,7 @@ if (!allowedModels.includes(fileName)) {
 }
 
 onMounted(() => {
-  const viewer = new Viewer({
+  viewer = new Viewer({
     canvasId: "xeokit_canvas",
     transparent: true,
     dtxEnabled: true
@@ -70,6 +65,9 @@ onMounted(() => {
 </script>
 
 <template>
+  <button @click="drawLine(startPoint, endPoint)">
+    Draw Line
+  </button>
   <canvas id="xeokit_canvas"></canvas>
 </template>
 
