@@ -15,10 +15,10 @@ export const useMainStore = defineStore('main', () => {
     const x = endPoint[0] - startPoint[0]
     const y = endPoint[1] - startPoint[1]
 
-    const point1: Vector3d = startPoint
+    const point1: Vector3d = [startPoint[0], startPoint[1], startPoint[2]]
     const point2: Vector3d = [startPoint[0] + x, startPoint[1], startPoint[2]]
     const point3: Vector3d = [startPoint[0]+ x, startPoint[1] + y, startPoint[2]]
-    const point4: Vector3d = endPoint
+    const point4: Vector3d = [endPoint[0], endPoint[1], endPoint[2]]
 
     const line1: Line3d = [point1, point2]
     const line2: Line3d = [point2, point3]

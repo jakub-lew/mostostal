@@ -1,13 +1,44 @@
 <script setup lang="ts">
 import { Viewer, XKTLoaderPlugin } from '@xeokit/xeokit-sdk';
-import { onMounted } from 'vue';
+import {buildLineGeometry, buildSphereGeometry, Mesh, ReadableGeometry, PhongMaterial} from '@xeokit/xeokit-sdk';
+
+import { onMounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { allowedModels } from '@/utils/config';
 import { storeToRefs } from 'pinia'
+import { useMainStore, type Vector3d } from '@/stores/main';
+
+
+const mainStore = useMainStore()
+const {startPoint, endPoint, pipeRouting} = storeToRefs(mainStore)
 
 const route = useRoute()
 const router = useRouter()
 const fileName = route.params['name'] as string
+let viewer: Viewer | null
+
+function drawLine(startPoint: Vector3d, endPoint: Vector3d) {
+  if (!viewer) {
+    console.warn("Viewer not initialized")
+    return
+  }
+  new Mesh(viewer.scene, {
+        geometry: new ReadableGeometry(viewer.scene, buildLineGeometry({
+            startPoint: startPoint,
+            endPoint: endPoint,
+        })),
+        material: new PhongMaterial(viewer.scene, {
+            emissive: [0, 1,]
+        })
+    })
+}
+
+watch(startPoint, (newVal, oldVal) => {
+  if (newVal && endPoint.value) {
+    drawLine(oldVal, newVal)
+  }
+})
+
 
 if (!allowedModels.includes(fileName)) {
   console.warn("File name not supported")
