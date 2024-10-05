@@ -1,0 +1,29 @@
+{
+  "pipes": [
+    {
+      "id": "1",
+      "ends": {
+        "start": [
+          0,
+          0,
+          0
+        ],
+        "end": [
+          100,
+          200,
+          300
+        ]
+      },
+      "checkpooints": {
+        "points": [],
+        "planes": [],
+        "volumes": []
+      },
+      "obstackles": {
+        "points": [],
+        "planes": [],
+        "volumes": []
+      }
+    }
+  ]
+}
