@@ -1,9 +1,9 @@
 export class GridGen {
     static test() {
         // create neighbors
-        const xNumber = 2;
-        const yNumber = 2;
-        const zNumber = 2;
+        const xNumber = 5;
+        const yNumber = 5;
+        const zNumber = 5;
         const span = 10;
         const coordsToIdx = (x, y, z) => x + y * xNumber + z * xNumber * yNumber;
         const IdxToCoords = (idx) => {
@@ -12,7 +12,7 @@ export class GridGen {
             const z = Math.floor(idx / (xNumber * yNumber));
             return [x, y, z];
         };
-        const graph = this.generateGrid(span, xNumber, yNumber, zNumber);
+        const graph = this.generateGrid([5, 5, 5], span, xNumber, yNumber, zNumber);
         const lines = [];
         for (const edge of graph.edges) {
             const start = IdxToCoords(edge.nodesPair[0]);
@@ -24,23 +24,9 @@ export class GridGen {
         }
         ;
         return lines;
-        return [
-            {
-                startPoint: [0, 0, 0],
-                endPoint: [1, 1, 1],
-            },
-            {
-                startPoint: [0, 2, 0],
-                endPoint: [1, 1, 1],
-            },
-            {
-                startPoint: [0, 0, 0],
-                endPoint: [91, 91, 91],
-            }
-        ];
     }
 }
-GridGen.generateGrid = (span, xNumber, yNumber, zNumber) => {
+GridGen.generateGrid = (origin, span, xNumber, yNumber, zNumber) => {
     const INF = Number.MAX_SAFE_INTEGER;
     const graph = { nodes: [], edges: [] };
     // create neighbors
