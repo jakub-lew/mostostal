@@ -8,21 +8,42 @@ from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 import requests
 
+PENETRATION = {
+    "IfcColumn": False,
+    "IfcSlab": False,
+    "IfcMember": False,
+    "IfcSanitaryTerminal": False,
+    "IfcRoof": False,
+    "IfcWall": False,
+    "IfcBeam": False,
+    "IfcSpace": True,
+    "IfcCovering": False,
+    "IfcBuildingElementProxy": False,
+    "IfcDoor": True,
+    "IfcWindow": True,
+    "IfcFurniture": True,
+    "IfcGrid": True,
+    "IfcOpeningElement": True,
+}
+
 
 def get_bboxes(ifc_path):
     model = ifcopenshell.open(ifc_path)
     # elements = [el for el in model.by_type("IfcElement")]
     bboxes = []
     types = []
-    for el in model.by_type("IfcBuildingElement"):
+    for el in model.by_type("IfcProduct"):
         if el.Representation is not None:
-            settings = ifcopenshell.geom.settings()
-            shape = ifcopenshell.geom.create_shape(settings, el)
-            verts = ifcopenshell.util.shape.get_element_vertices(el, shape.geometry)
-            bbox = ifcopenshell.util.shape.get_bbox(verts)
-            bboxes.append(np.concatenate(bbox))
-            types.append(el.is_a())
-
+            try:
+                settings = ifcopenshell.geom.settings()
+                settings.USE_WORLD_COORDINATES = True
+                shape = ifcopenshell.geom.create_shape(settings, el)
+                verts = ifcopenshell.util.shape.get_element_vertices(el, shape.geometry)
+                bbox = ifcopenshell.util.shape.get_bbox(verts)
+                bboxes.append(np.concatenate(bbox))
+                types.append(el.is_a())
+            except RuntimeError:
+                pass
     bboxes = np.array(bboxes)
     obstacleBBoxes = []
     for el, typ in zip(bboxes, types):
@@ -35,6 +56,7 @@ def get_bboxes(ifc_path):
                 "yDist": el[4] - el[1],
                 "zDist": el[5] - el[2],
                 "type": typ,
+                "penetrable": PENETRATION[typ],
             }
         )
     xmin, ymin, zmin, xmax, ymax, zmax = np.transpose(bboxes)
@@ -49,8 +71,8 @@ def get_bboxes(ifc_path):
         },
         "obstacleBBoxes": obstacleBBoxes,
     }
-    # with open("bboxes.json", "w") as f:
-    #     json.dump(result, f, indent=2)
+    with open("bboxes.json", "w") as f:
+        json.dump(result, f, indent=2)
     return result
 
 
@@ -70,3 +92,10 @@ def get_bbox(path: str):
         f.write(file_stream.content)
     file_path = f"models/{filename}"
     return get_bboxes(file_path)
+
+
+# get_bboxes("../../frontend/server/models/example.ifc")
+# types = set()
+# for el in model.by_type("IfcProduct"):
+#     if el.Representation is not None:
+#         types.add(el.is_a())
