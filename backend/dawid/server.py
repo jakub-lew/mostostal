@@ -4,7 +4,7 @@ import ifcopenshell.util.shape
 import ifcopenshell.geom
 import numpy as np
 import json
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 import requests
 
 PENETRATION = {
@@ -76,21 +76,7 @@ app = FastAPI()
 
 
 @app.get("/get_bbox/")
-@app.post("/get_bbox/")
-def get_bbox(path: str):
-    # path = "http://localhost:5200/example.ifc"
-    file_stream = requests.get(path)
-    filename = path.split("/")[-1]
-    if not os.path.exists("models"):
-        os.mkdir("models")
-    with open(f"models/{filename}", "wb") as f:
-        f.write(file_stream.content)
-    file_path = f"models/{filename}"
+@app.post("/get_bbox/{filename}")
+def get_bbox(filename: str):
+    file_path = f"../../frontend/server/models/{filename}"
     return get_bboxes(file_path)
-
-
-# get_bboxes("../../frontend/server/models/example.ifc")
-# types = set()
-# for el in model.by_type("IfcProduct"):
-#     if el.Representation is not None:
-#         types.add(el.is_a())
