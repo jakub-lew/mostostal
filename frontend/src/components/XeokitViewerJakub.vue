@@ -92,7 +92,7 @@ let lines = [
         return checkLine(line.startPoint as [number, number, number], line.endPoint as [number, number, number] , 0.03);
      });
 
-    for (const line of [lines, graphLines].flat()) {
+    for (const line of [/*lines*/ graphLines].flat()) {
     new Mesh(viewer.scene, {
         geometry: new ReadableGeometry(viewer.scene, buildLineGeometry({
             startPoint: line.startPoint,
@@ -115,13 +115,14 @@ let lines = [
         })
     });
 
-    const xktLoader = new XKTLoaderPlugin(viewer);
+    // const xktLoader = new XKTLoaderPlugin(viewer);
 
-    const sceneModel = xktLoader.load({
-        id: "myModel",
-        src: `http://127.0.0.1:5200/Duplex.xkt`,
-        edges: true,
-    });
+    // const sceneModel = xktLoader.load({
+    //     id: "myModel",
+    //     src: `http://127.0.0.1:5200/Duplex.xkt`,
+    //     edges: true,
+    // });
+    // sceneModel.xrayed = true;
 
 });
 
