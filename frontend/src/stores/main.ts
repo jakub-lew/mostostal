@@ -11,7 +11,7 @@ export const useMainStore = defineStore('main', () => {
   const pipeRouting: Ref<Line3d[]> = ref([])
 
 
-  function deconstruction( startPoint: Vector3d, endPoint: Vector3d ) {
+  function deconstruction( startPoint: Vector3d, endPoint: Vector3d ): Line3d[] {
     const x = endPoint[0] - startPoint[0]
     const y = endPoint[1] - startPoint[1]
 
@@ -25,6 +25,8 @@ export const useMainStore = defineStore('main', () => {
     const line3: Line3d = [point3, point4]
 
     pipeRouting.value = [line1, line2, line3]
+
+    return pipeRouting.value
   }
 
   return { startPoint, endPoint, pipeRouting, deconstruction }

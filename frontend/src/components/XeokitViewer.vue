@@ -10,6 +10,7 @@ import { useMainStore, type Vector3d } from '@/stores/main';
 
 const mainStore = useMainStore()
 const {startPoint, endPoint, pipeRouting} = storeToRefs(mainStore)
+const {deconstruction} = mainStore
 
 const route = useRoute()
 const router = useRouter()
@@ -185,7 +186,14 @@ const selectPoint = function(onMovePoint, onSelectPoint) {
 
 const getPath = function(points, callWithSegments) {
     // mock
-    callWithSegments([ points ]);
+
+    startPoint.value = points[0]
+    endPoint.value = points[1]
+
+    const routing = deconstruction(startPoint.value, endPoint.value)
+
+
+    callWithSegments(routing);
 };
 
 const buildPipe = function(segments) {
