@@ -9,13 +9,11 @@
 import {ref} from 'vue'
 import ky from 'ky';
 
-const response = ref({})
-
+const response = ref({} as unknown)
 
 async function testServer() {
-  const json = await ky.get('http://localhost:3000/pipes').json();
+  const json = await ky.get('http://localhost:5100/pipes').json();
   response.value = json
 }
-
 
 </script>

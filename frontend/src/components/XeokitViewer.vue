@@ -1,6 +1,10 @@
 <script setup lang="ts">
-import { Viewer, XKTLoaderPlugin } from '@xeokit/xeokit-sdk';
+import { Viewer, XKTLoaderPlugin, WebIFCLoaderPlugin } from '@xeokit/xeokit-sdk';
 import { onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+
+const route = useRoute()
+const fileName = route.params['name']
 
 onMounted(() => {
     const viewer = new Viewer({
@@ -17,9 +21,10 @@ onMounted(() => {
 
     const sceneModel = xktLoader.load({
         id: "myModel",
-        src: "https://xeokit.github.io/xeokit-bim-viewer/app/data/projects/HolterTower/models/ifcCXConverterPipeline1//model_1.xkt",
+        src: `http://127.0.0.1:5200/${fileName}.xkt`,
         edges: true,
     });
+
 });
 
 

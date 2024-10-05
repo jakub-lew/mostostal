@@ -1,9 +1,15 @@
 # pipe-autorouting
 
     pnpm install
-    pnpm run dev
-    pnpm run dev:server 
+    pnpm run dev:frontend
+    pnpm run dev:server:db
+    pnpm run dev:Server:models
 
+
+
+  * localhost:5173  - web app
+  * localhost:5100  - mocked API
+  * localhost:5200  - server with models
 
 ![alt text](./docs/image.png)
 
