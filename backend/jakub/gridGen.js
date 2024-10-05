@@ -46,12 +46,39 @@ export class GridGen {
                 distance: edge.distance,
             };
         });
-        return { nodes, edges };
+        const nodesExport = graph.nodes.map((node) => {
+            const coords = this.idxToCoords(graph.xNumber, graph.yNumber)(node.nr);
+            return {
+                nodeNr: node.nr,
+                x: coords[0],
+                y: coords[1],
+                z: coords[2],
+            };
+        });
+        const edgesExport = graph.edges.map((edge) => {
+            return {
+                edgeNr: edge.edgeNr,
+                node1: edge.nodesPair[0],
+                node2: edge.nodesPair[1],
+            };
+        });
+        const graphToExport = {
+            span: graph.span,
+            grid: { nodes: nodesExport, edges: edgesExport },
+        };
+        return JSON.stringify(graphToExport);
     }
 }
+GridGen.coordsToIdx = (x, y, z, xNumber, yNumber) => (x, y, z) => x + y * xNumber + z * xNumber * yNumber;
+GridGen.idxToCoords = (xNumber, yNumber) => (idx) => {
+    const x = idx % xNumber;
+    const y = Math.floor(idx / xNumber) % yNumber;
+    const z = Math.floor(idx / (xNumber * yNumber));
+    return [x, y, z];
+};
 GridGen.generateGrid = (origin, span, xNumber, yNumber, zNumber) => {
     const INF = Number.MAX_SAFE_INTEGER;
-    const graph = { nodes: [], edges: [] };
+    const graph = { nodes: [], edges: [], span: span, xNumber: xNumber, yNumber: yNumber, zNumber: zNumber };
     // create neighbors
     const coordsToIdx = (x, y, z) => x + y * xNumber + z * xNumber * yNumber;
     const IdxToCoords = (idx) => {
@@ -158,5 +185,5 @@ GridGen.generateGrid = (origin, span, xNumber, yNumber, zNumber) => {
     //for(let i=1 ; i)
     return graph;
 };
-GridGen.exportToJSON(GridGen.generateGrid([5, 5, 5], 10, 2, 1, 1));
+console.log(GridGen.exportToJSON(GridGen.generateGrid([5, 5, 5], 10, 2, 2, 2)));
 //# sourceMappingURL=gridGen.js.map
