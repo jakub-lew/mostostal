@@ -51,6 +51,10 @@ def get_bboxes(ifc_path):
     bboxes = np.array(bboxes)
     obstacleBBoxes = []
     for el, typ in zip(bboxes, types):
+        if typ not in PENETRATION:
+            penetrable = False
+        else:
+            penetrable = PENETRATION[typ]
         obstacleBBoxes.append(
             {
                 "x": el[0],
@@ -60,7 +64,7 @@ def get_bboxes(ifc_path):
                 "yDist": el[4] - el[1],
                 "zDist": el[5] - el[2],
                 "type": typ,
-                "penetrable": PENETRATION[typ],
+                "penetrable": penetrable,
             }
         )
     xmin, ymin, zmin, xmax, ymax, zmax = np.transpose(bboxes)
