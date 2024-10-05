@@ -1,0 +1,28 @@
+{
+    "roomBBox":{
+    "x": 0,
+    "y": 0,
+    "z": 0,
+    "xDist": 100,
+    "yDist": 100,
+    "zDist": 100
+    },
+  "obstacleBBoxes": [
+    {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "xDist": 10,
+      "yDist": 10,
+      "zDist": 10
+    },
+    {
+      "x": 30,
+      "y": 30,
+      "z": 30,
+      "xDist": 40,
+      "yDist": 40,
+      "zDist": 40
+    }
+]
+}
