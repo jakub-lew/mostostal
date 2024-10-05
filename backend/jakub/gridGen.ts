@@ -1,15 +1,11 @@
 export class GridGen {
-    static main = () => {
+    static generateGrid = (span : number, xNumber : number, yNumber : number, zNumber : number) => {
         const INF = Number.MAX_SAFE_INTEGER;
         interface Edge { edgeNr: number, nodesPair: [number, number], distance: number }
         interface GraphNode { nr: number, edges: Edge[], pathLength: number }
         interface Graph { nodes: GraphNode[], edges: Edge[] }
         const graph: Graph = { nodes: [], edges: [] };
         // create neighbors
-        const xNumber = 5
-        const yNumber = 5;
-        const zNumber = 5;
-        const span = 10;
         const coordsToIdx = (x: number, y: number, z: number) => x + y * xNumber + z * xNumber * yNumber;
         const IdxToCoords = (idx: number) => {
             const x = idx % xNumber;
@@ -41,11 +37,32 @@ export class GridGen {
                             node.edges.push(edge);
                             neighborNd.edges.push(edge);
                         }
+                        if(x < xNumber-1) {
+                            const neighborNd = graph.nodes[coordsToIdx(x+1, y-1, z)];
+                            const edge: Edge = { edgeNr: graph.edges.length, nodesPair: [ndNr, neighborNd.nr], distance: span * Math.sqrt(2) };
+                            graph.edges.push(edge);
+                            node.edges.push(edge);
+                            neighborNd.edges.push(edge);
+                        }
                     }
                     if (z > 0) {
                         {
                             const neighborNd = graph.nodes[coordsToIdx(x, y, z - 1)];
                             const edge: Edge = { edgeNr: graph.edges.length, nodesPair: [ndNr, neighborNd.nr], distance: span };
+                            graph.edges.push(edge);
+                            node.edges.push(edge);
+                            neighborNd.edges.push(edge);
+                        }
+                        if(x < xNumber-1) {
+                            const neighborNd = graph.nodes[coordsToIdx(x+1, y, z-1)];
+                            const edge: Edge = { edgeNr: graph.edges.length, nodesPair: [ndNr, neighborNd.nr], distance: span * Math.sqrt(2) };
+                            graph.edges.push(edge);
+                            node.edges.push(edge);
+                            neighborNd.edges.push(edge);
+                        }
+                        if(y < yNumber-1) {
+                            const neighborNd = graph.nodes[coordsToIdx(x, y+1, z-1)];
+                            const edge: Edge = { edgeNr: graph.edges.length, nodesPair: [ndNr, neighborNd.nr], distance: span * Math.sqrt(2) };
                             graph.edges.push(edge);
                             node.edges.push(edge);
                             neighborNd.edges.push(edge);
@@ -101,10 +118,10 @@ export class GridGen {
     }
     static test() {
         // create neighbors
-        const xNumber = 5
-        const yNumber = 5;
-        const zNumber = 5;
-        const span = 10;
+        const xNumber = 2;
+        const yNumber = 2;
+        const zNumber = 2;
+        const span = 10
         const coordsToIdx = (x: number, y: number, z: number) => x + y * xNumber + z * xNumber * yNumber;
         const IdxToCoords = (idx: number) => {
             const x = idx % xNumber;
@@ -112,7 +129,7 @@ export class GridGen {
             const z = Math.floor(idx / (xNumber * yNumber));
             return [x, y, z];
         }
-        const graph = this.main();
+        const graph = this.generateGrid(span, xNumber, yNumber, zNumber);
         const lines = [];
         for (const edge of graph.edges) {
             const start = IdxToCoords(edge.nodesPair[0]);
@@ -142,4 +159,4 @@ export class GridGen {
         ]
     }
 }
-GridGen.main();
+//GridGen.generateGrid();
