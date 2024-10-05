@@ -17,16 +17,12 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "@guolao/vue-monaco-editor": "^1.5.4",
     "@primevue/themes": "^4.0.7",
-    "@types/ace": "^0.0.52",
     "@xeokit/xeokit-sdk": "^2.6.46",
     "ace-builds": "^1.36.2",
     "http-server": "^14.1.1",
     "json-server": "1.0.0-beta.3",
     "ky": "^1.7.2",
-    "mathjs": "^13.2.0",
-    "monaco-editor": "^0.52.0",
     "pinia": "^2.1.7",
     "primeicons": "^7.0.0",
     "primevue": "^4.0.7",
