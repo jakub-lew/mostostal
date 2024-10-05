@@ -5,7 +5,8 @@ import ifcopenshell.geom
 import numpy as np
 import json
 from fastapi import FastAPI, Request
-import requests
+import sys
+
 
 PENETRATION = {
     "IfcColumn": False,
@@ -23,6 +24,11 @@ PENETRATION = {
     "IfcFurniture": True,
     "IfcGrid": True,
     "IfcOpeningElement": True,
+    "IfcStairFlight": False,
+    "IfcFurnishingElement": False,
+    "IfcFooting": False,
+    "IfcWallStandardCase": False,
+    "IfcRailing": False,
 }
 
 
@@ -31,6 +37,8 @@ def get_bboxes(ifc_path):
     bboxes = []
     types = []
     settings = ifcopenshell.geom.settings()
+    # settings.set("building-local-placement", True)
+    # settings.set("use-world-coords", True)
     iterator = ifcopenshell.geom.iterator(
         settings, model, include=model.by_type("IfcProduct"), exclude=None
     )
@@ -67,7 +75,8 @@ def get_bboxes(ifc_path):
         },
         "obstacleBBoxes": obstacleBBoxes,
     }
-    with open("bboxes.json", "w") as f:
+    name = os.path.splitext(os.path.basename(ifc_path))[0]
+    with open(f"bboxes-{name}.json", "w") as f:
         json.dump(result, f, indent=2)
     return result
 
@@ -80,3 +89,15 @@ app = FastAPI()
 def get_bbox(filename: str):
     file_path = f"../../frontend/server/models/{filename}"
     return get_bboxes(file_path)
+
+
+def main():
+    if len(sys.argv) > 1:
+        fp = sys.argv[1]
+        a = get_bboxes("../../frontend/server/models/Duplex.ifc")
+        name = os.path.splitext(os.path.basename(fp))[0]
+        print(f"backend/dawid/bboxes-{name}.json")
+
+
+if __name__ == "__main__":
+    main()
