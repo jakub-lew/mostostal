@@ -6,6 +6,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { allowedModels } from '@/utils/config';
 import { storeToRefs } from 'pinia'
 import { useMainStore, type Vector3d } from '@/stores/main';
+import { bboxes } from "@/utils/pathfinding/bboxes";
 
 
 const mainStore = useMainStore()
@@ -17,30 +18,18 @@ const router = useRouter()
 const fileName = route.params['name'] as string
 let viewer: Viewer | null
 
-function drawLine(startPoint: Vector3d, endPoint: Vector3d) {
-  if (!viewer) {
-    console.warn("Viewer not initialized")
-    return
-  }
-  new Mesh(viewer.scene, {
-        geometry: new ReadableGeometry(viewer.scene, buildLineGeometry({
-            startPoint: startPoint,
-            endPoint: endPoint,
-        })),
-        material: new PhongMaterial(viewer.scene, {
-            emissive: [0, 1,]
-        })
-    })
-}
-
-
 
 if (!allowedModels.includes(fileName)) {
   console.warn("File name not supported")
   router.push({ name: "home" })
 }
+const obstacles = bboxes[fileName as keyof typeof bboxes];
+
 
 onMounted(() => {
+  console.log("")
+
+
   viewer = new Viewer({
     canvasId: "xeokit_canvas",
     transparent: true,
@@ -389,9 +378,6 @@ viewer.scene.canvas.canvas.addEventListener('contextmenu', (event) => {
 </script>
 
 <template>
-  <button @click="drawLine(startPoint, endPoint)">
-    Draw Line
-  </button>
   <canvas id="xeokit_canvas"></canvas>
 </template>
 
