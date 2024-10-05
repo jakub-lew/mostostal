@@ -1,10 +1,10 @@
 import { Graph, GraphNode, } from './interfaces';
 
 class aStarClass {
-    static main = () => {
+    static main = (graph : Graph) => {
         // const 
         
-        // const INF = Number.MAX_SAFE_INTEGER;
+         const INF = Number.MAX_SAFE_INTEGER;
      
         // //define start vertex
         // graph.nodes[0].pathLength = 0;
