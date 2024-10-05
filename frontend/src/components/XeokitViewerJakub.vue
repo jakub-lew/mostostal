@@ -41,16 +41,17 @@ let lines = [
     }
 ];
 //lines = GridGen.test();
-lines = [];
-const linesJson = data;
-linesJson.grid.edges.forEach((edge) => {
-  const coords1 = linesJson.grid.nodes[edge.node1];
-  const coords2 = linesJson.grid.nodes[edge.node2];
-   lines.push({
-       startPoint: [coords1.x, coords1.y, coords1.z],
-       endPoint: [coords2.x, coords2.y, coords2.z]
-   });
-  });
+// lines = [];
+// const linesJson = data;
+// linesJson.grid.edges.forEach((edge) => {
+//   const coords1 = linesJson.grid.nodes[edge.node1];
+//   const coords2 = linesJson.grid.nodes[edge.node2];
+//    lines.push({
+//        startPoint: [coords1.x, coords1.y, coords1.z],
+//        endPoint: [coords2.x, coords2.y, coords2.z]
+//    });
+//   });
+lines = GridGen.graphEdgesToLines(GridGen.exampleGraphWithHoles());
     for (const line of lines) {
     new Mesh(viewer.scene, {
         geometry: new ReadableGeometry(viewer.scene, buildLineGeometry({

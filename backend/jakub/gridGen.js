@@ -47,7 +47,7 @@ export class GridGen {
             };
         });
         const nodesExport = graph.nodes.map((node) => {
-            const coords = this.idxToCoords(graph.xNumber, graph.yNumber)(node.nr);
+            const coords = this.idxToCoords(graph.xNumber, graph.yNumber, node.nr);
             return {
                 nodeNr: node.nr,
                 x: coords[0],
@@ -68,9 +68,63 @@ export class GridGen {
         };
         return JSON.stringify(graphToExport);
     }
+    static createGrid(room, obstacles, span) {
+        const xNumber = Math.floor(room.xDist / span);
+        const yNumber = Math.floor(room.yDist / span);
+        const zNumber = Math.floor(room.zDist / span);
+        const graph = this.generateGrid([room.x, room.y, room.z], span, xNumber, yNumber, zNumber);
+        const edgesToDel = [];
+        for (const edge of graph.edges) {
+            const start = this.idxToCoords(xNumber, yNumber, edge.nodesPair[0]);
+            const end = this.idxToCoords(xNumber, yNumber, edge.nodesPair[1]);
+            for (const obstacle of obstacles) {
+                if (start[0] >= obstacle.x && start[0] <= obstacle.x + obstacle.xDist &&
+                    start[1] >= obstacle.y && start[1] <= obstacle.y + obstacle.yDist &&
+                    start[2] >= obstacle.z && start[2] <= obstacle.z + obstacle.zDist) {
+                    edgesToDel.push(edge);
+                }
+                else if (end[0] >= obstacle.x && end[0] <= obstacle.x + obstacle.xDist &&
+                    end[1] >= obstacle.y && end[1] <= obstacle.y + obstacle.yDist &&
+                    end[2] >= obstacle.z && end[2] <= obstacle.z + obstacle.zDist) {
+                    edgesToDel.push(edge);
+                }
+            }
+        }
+        while (edgesToDel.length > 0) {
+            const edge = edgesToDel.pop();
+            graph.edges = graph.edges.filter((e) => e != edge);
+        }
+        return graph;
+    }
+    static exampleGraphWithHoles() {
+        return GridGen.createGrid({ x: 0, y: 0, z: 0, xDist: 5, yDist: 4, zDist: 3 }, [{ x: 1, y: 1, z: 1, xDist: 1, yDist: 1, zDist: 1 }], 1);
+    }
+    static graphEdgesToLines(graph) {
+        const xNumber = graph.xNumber;
+        const yNumber = graph.yNumber;
+        const zNumber = graph.zNumber;
+        const coordsToIdx = (x, y, z) => x + y * xNumber + z * xNumber * yNumber;
+        const IdxToCoords = (idx) => {
+            const x = idx % xNumber;
+            const y = Math.floor(idx / xNumber) % yNumber;
+            const z = Math.floor(idx / (xNumber * yNumber));
+            return [x, y, z];
+        };
+        const lines = [];
+        for (const edge of graph.edges) {
+            const start = IdxToCoords(edge.nodesPair[0]);
+            const end = IdxToCoords(edge.nodesPair[1]);
+            lines.push({
+                startPoint: start,
+                endPoint: end,
+            });
+        }
+        ;
+        return lines;
+    }
 }
 GridGen.coordsToIdx = (x, y, z, xNumber, yNumber) => (x, y, z) => x + y * xNumber + z * xNumber * yNumber;
-GridGen.idxToCoords = (xNumber, yNumber) => (idx) => {
+GridGen.idxToCoords = (xNumber, yNumber, idx) => {
     const x = idx % xNumber;
     const y = Math.floor(idx / xNumber) % yNumber;
     const z = Math.floor(idx / (xNumber * yNumber));
@@ -185,5 +239,5 @@ GridGen.generateGrid = (origin, span, xNumber, yNumber, zNumber) => {
     //for(let i=1 ; i)
     return graph;
 };
-console.log(GridGen.exportToJSON(GridGen.generateGrid([5, 5, 5], 10, 2, 2, 2)));
+//console.log(GridGen.exportToJSON(GridGen.generateGrid([5, 5, 5], 10, 2, 2, 2)))
 //# sourceMappingURL=gridGen.js.map
