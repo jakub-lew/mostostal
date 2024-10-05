@@ -105,9 +105,9 @@ const mousePointSelector = function(viewer, ray2WorldPos) {
 };
 
 const selectPoint = function(onMovePoint, onSelectPoint) {
-    (mousePointSelector(
+    let currentSelectorCleanup = mousePointSelector(
         viewer,
-        (origin, direction) => scene.pick({ origin: origin, direction: direction, pickSurface: true })))(
+        (origin, direction) => scene.pick({ origin: origin, direction: direction, pickSurface: true }))(
         (...args) => console.log("onCancel pos0", args),
         (canvasPos, pickResult) => onMovePoint(pickResult && pickResult.worldPos.slice(0), false),
         (canvasPos, pickResult) => {
@@ -142,7 +142,7 @@ const selectPoint = function(onMovePoint, onSelectPoint) {
                     return false;
                 };
 
-                mousePointSelector(viewer, (origin, direction) => ({ origin, direction }))(
+                currentSelectorCleanup = mousePointSelector(viewer, (origin, direction) => ({ origin, direction }))(
                     (...args) => console.log("onCancel pos1", args),
                     (canvasPos, ray) => onMovePoint(closestPoint(ray), true),
                     (canvasPos, ray) => onSelectPoint(closestPoint(ray)));
@@ -150,6 +150,8 @@ const selectPoint = function(onMovePoint, onSelectPoint) {
                 onSelectPoint(null);
             }
         });
+
+    return { cancel: () => currentSelectorCleanup() };
 };
 
 
@@ -222,11 +224,18 @@ const sphere = function(color) {
         });
 };
 
-const greenSphere = sphere([0, 1, 0]);
-const redSphere   = sphere([1, 0, 0]);
+const startPipeInteraction = function() {
+
+    const greenSphere = sphere([0, 1, 0]);
+    const redSphere   = sphere([1, 0, 0]);
+    redSphere.visible = false;
+
+    let currentInteraction = null;
+    let segmentMeshes = [ ];
+    let currentPipeSegment = null;
 
 (function startPipe() {
-    selectPoint(
+    currentInteraction = selectPoint(
         p0 => {
             greenSphere.visible = !!p0;
             if (p0) {
@@ -241,9 +250,7 @@ const redSphere   = sphere([1, 0, 0]);
                     greenSphere.visible = true;
                     greenSphere.position = p0;
 
-                    let currentPipeSegment = null;
-
-                    selectPoint(
+                    currentInteraction = selectPoint(
                         (p1, isExtruded) => {
                             redSphere.visible = !!p1;
                             if (p1) {
@@ -268,7 +275,7 @@ const redSphere   = sphere([1, 0, 0]);
                                     function(segments) {
                                         if (currentPipeSegment)
                                             currentPipeSegment.destroy();
-                                        currentPipeSegment = buildPipe(segments);
+                                        segmentMeshes.push(buildPipe(segments));
                                         startSegment(p1);
                                     });
                             } else {
@@ -279,6 +286,38 @@ const redSphere   = sphere([1, 0, 0]);
             }
         });
 })();
+    return {
+        finish: () => {
+            currentInteraction.cancel();
+            greenSphere.destroy();
+            redSphere.destroy();
+        },
+        cancel: () => {
+            currentInteraction.cancel();
+            greenSphere.destroy();
+            redSphere.destroy();
+            segmentMeshes.forEach(m => m.destroy());
+            if (currentPipeSegment)
+                currentPipeSegment.destroy();
+        }
+    };
+};
+
+
+let pipeInteraction = null;
+
+window.document.addEventListener("keyup", e => {
+    if (e.key === "Enter") {
+        if (pipeInteraction) {
+            pipeInteraction.finish();
+            pipeInteraction = null;
+        } else {
+            pipeInteraction = startPipeInteraction();
+        }
+    }
+});
+
+window.document.addEventListener("keyup", e => { if ((e.key === "Escape") && pipeInteraction) pipeInteraction.cancel(); });
 
 window.viewer = viewer;
 
