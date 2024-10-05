@@ -1,0 +1,41 @@
+{
+  "span": 10,
+  "grid": {
+    "nodes": [
+      { "nodeNr": 0, "x": 0, "y": 0, "z": 0 },
+      { "nodeNr": 1, "x": 1, "y": 0, "z": 0 },
+      { "nodeNr": 2, "x": 0, "y": 1, "z": 0 },
+      { "nodeNr": 3, "x": 1, "y": 1, "z": 0 },
+      { "nodeNr": 4, "x": 0, "y": 0, "z": 1 },
+      { "nodeNr": 5, "x": 1, "y": 0, "z": 1 },
+      { "nodeNr": 6, "x": 0, "y": 1, "z": 1 },
+      { "nodeNr": 7, "x": 1, "y": 1, "z": 1 }
+    ],
+    "edges": [
+      { "edgeNr": 0, "node1": 1, "node2": 0 },
+      { "edgeNr": 1, "node1": 2, "node2": 0 },
+      { "edgeNr": 2, "node1": 2, "node2": 1 },
+      { "edgeNr": 3, "node1": 3, "node2": 2 },
+      { "edgeNr": 4, "node1": 3, "node2": 1 },
+      { "edgeNr": 5, "node1": 3, "node2": 0 },
+      { "edgeNr": 6, "node1": 4, "node2": 0 },
+      { "edgeNr": 7, "node1": 4, "node2": 1 },
+      { "edgeNr": 8, "node1": 4, "node2": 2 },
+      { "edgeNr": 9, "node1": 5, "node2": 4 },
+      { "edgeNr": 10, "node1": 5, "node2": 1 },
+      { "edgeNr": 11, "node1": 5, "node2": 3 },
+      { "edgeNr": 12, "node1": 5, "node2": 0 },
+      { "edgeNr": 13, "node1": 6, "node2": 4 },
+      { "edgeNr": 14, "node1": 6, "node2": 5 },
+      { "edgeNr": 15, "node1": 6, "node2": 2 },
+      { "edgeNr": 16, "node1": 6, "node2": 3 },
+      { "edgeNr": 17, "node1": 6, "node2": 0 },
+      { "edgeNr": 18, "node1": 7, "node2": 6 },
+      { "edgeNr": 19, "node1": 7, "node2": 5 },
+      { "edgeNr": 20, "node1": 7, "node2": 3 },
+      { "edgeNr": 21, "node1": 7, "node2": 4 },
+      { "edgeNr": 22, "node1": 7, "node2": 2 },
+      { "edgeNr": 23, "node1": 7, "node2": 1 }
+    ]
+  }
+}
