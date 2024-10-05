@@ -5,7 +5,9 @@ import { useRoute } from 'vue-router';
 import {buildLineGeometry, buildSphereGeometry, Viewer, Mesh, ReadableGeometry, PhongMaterial} from '@xeokit/xeokit-sdk';
 import { GridGen} from '../../../backend/jakub/gridGen';
 import * as data from '../../../backend/jakub/exampleForTomek.json';
-import * as obstacles from '../../../backend/dawid/bboxes-example.json';
+import * as obstacles from '../../../backend/dawid/bboxes-global-coordinates.json';
+// import * as obstacles from '../../../frontend/server/models/BUILDING_boxes.json';
+import { Result } from 'postcss';
 
 const route = useRoute()
 const fileName = route.params['name']
@@ -65,6 +67,12 @@ let lines = [
         }
 
      }
+     lines = lines.map((line) => {
+        return {
+            startPoint: [line.startPoint[0], line.startPoint[2], -line.startPoint[1]],
+            endPoint: [line.endPoint[0], line.endPoint[2], -line.endPoint[1]]
+        }
+     });
 
     for (const line of lines) {
     new Mesh(viewer.scene, {
