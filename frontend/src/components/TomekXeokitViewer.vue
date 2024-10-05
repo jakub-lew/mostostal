@@ -5,7 +5,7 @@ import { onMounted, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { allowedModels } from '@/utils/config';
 import { storeToRefs } from 'pinia'
-import { useMainStore, type Vector3d } from '@/stores/main';
+import { useMainStore, type Line3d, type Vector3d } from '@/stores/main';
 import { bboxes } from "@/utils/pathfinding/bboxes";
 
 
@@ -24,6 +24,12 @@ if (!allowedModels.includes(fileName)) {
   router.push({ name: "home" })
 }
 const obstacles = bboxes[fileName as keyof typeof bboxes];
+
+
+async function getPathOptimized(startPoint: Vector3d, endPoint: Vector3d): Promise<Line3d[]> {
+  const route = deconstruction(startPoint, endPoint)
+  return route
+}
 
 
 onMounted(() => {
@@ -174,10 +180,9 @@ const selectPoint = function(onMovePoint, onSelectPoint) {
 };
 
 
-const getPath = function(points, callWithSegments) {
+const getPath = async function(points, callWithSegments) {
     // mock
-
-    const route = deconstruction(points[0], points[1])
+    const route = await getPathOptimized(points[0], points[1])
     callWithSegments(route);
 };
 
