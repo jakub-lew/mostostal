@@ -23,8 +23,8 @@ if (!allowedModels.includes(fileName)) {
   console.warn("File name not supported")
   router.push({ name: "home" })
 }
-const obstacles = bboxes[`${fileName}`]
-console.log(obstacles)
+const obstacles = bboxes[fileName as keyof typeof bboxes];
+
 
 onMounted(() => {
   console.log("")
