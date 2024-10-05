@@ -1,17 +1,24 @@
 <script setup lang="ts">
-import LeftPanel from '@/components/LeftPanel.vue'
-import XeokitViewer from '@/components/XeokitViewer.vue';
-import Splitter from 'primevue/splitter';
-import SplitterPanel from 'primevue/splitterpanel';
+
+const availableModels = [
+  { name: "BUILDING" },
+  { name: "Duplex" }
+]
 </script>
 
 <template>
-  <Splitter class="h-screen">
-    <SplitterPanel class="flex items-center justify-center p-2" :size="25" :minSize="10">
-      <LeftPanel></LeftPanel>
-    </SplitterPanel>
-    <SplitterPanel class="flex items-center justify-center class p-2" :size="75">
-      <XeokitViewer />
-    </SplitterPanel>
-  </Splitter>
+  <div class="flex flex-col justify-center h-screen">
+
+    <div class="flex justify-center items-center">
+      Choose your model
+    </div>
+    <div class="flex space-x-2 items-center justify-center">
+      <div v-for="model, index in availableModels" :key="index" class="w-1/3">
+        {{ model.name }}
+        <router-link :to="{ name: 'model', params: { name: model.name } }">
+          <img :src="`/${model.name}.png`">
+        </router-link>
+      </div>
+    </div>
+  </div>
 </template>
