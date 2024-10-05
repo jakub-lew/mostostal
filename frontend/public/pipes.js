@@ -317,7 +317,12 @@ window.document.addEventListener("keyup", e => {
     }
 });
 
-window.document.addEventListener("keyup", e => { if ((e.key === "Escape") && pipeInteraction) pipeInteraction.cancel(); });
+window.document.addEventListener("keyup", e => {
+    if ((e.key === "Escape") && pipeInteraction) {
+        pipeInteraction.cancel();
+        pipeInteraction = null;
+    }
+});
 
 window.viewer = viewer;
 
