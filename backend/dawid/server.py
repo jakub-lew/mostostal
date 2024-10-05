@@ -5,7 +5,6 @@ import ifcopenshell.geom
 import numpy as np
 import json
 from fastapi import FastAPI
-from fastapi.staticfiles import StaticFiles
 import requests
 
 PENETRATION = {
@@ -29,21 +28,18 @@ PENETRATION = {
 
 def get_bboxes(ifc_path):
     model = ifcopenshell.open(ifc_path)
-    # elements = [el for el in model.by_type("IfcElement")]
     bboxes = []
     types = []
-    for el in model.by_type("IfcProduct"):
-        if el.Representation is not None:
-            try:
-                settings = ifcopenshell.geom.settings()
-                settings.USE_WORLD_COORDINATES = True
-                shape = ifcopenshell.geom.create_shape(settings, el)
-                verts = ifcopenshell.util.shape.get_element_vertices(el, shape.geometry)
-                bbox = ifcopenshell.util.shape.get_bbox(verts)
-                bboxes.append(np.concatenate(bbox))
-                types.append(el.is_a())
-            except RuntimeError:
-                pass
+    settings = ifcopenshell.geom.settings()
+    iterator = ifcopenshell.geom.iterator(
+        settings, model, include=model.by_type("IfcProduct"), exclude=None
+    )
+    for el in iterator:
+        verts = el.geometry.verts
+        verts = np.reshape(np.array(verts), shape=(int(len(verts) / 3), 3))
+        bbox = ifcopenshell.util.shape.get_bbox(verts)
+        bboxes.append(np.concatenate(bbox))
+        types.append(el.type)
     bboxes = np.array(bboxes)
     obstacleBBoxes = []
     for el, typ in zip(bboxes, types):
@@ -77,7 +73,6 @@ def get_bboxes(ifc_path):
 
 
 app = FastAPI()
-# app.mount("/static", StaticFiles(directory="../modele/"), name="static")
 
 
 @app.get("/get_bbox/")
