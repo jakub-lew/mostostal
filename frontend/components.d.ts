@@ -7,22 +7,11 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
-    Button: typeof import('primevue/button')['default']
-    Editor: typeof import('./src/components/Editor.vue')['default']
-    EditorPlayground: typeof import('./src/components/EditorPlayground.vue')['default']
-    HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
-    IconCommunity: typeof import('./src/components/icons/IconCommunity.vue')['default']
-    IconDocumentation: typeof import('./src/components/icons/IconDocumentation.vue')['default']
-    IconEcosystem: typeof import('./src/components/icons/IconEcosystem.vue')['default']
-    IconSupport: typeof import('./src/components/icons/IconSupport.vue')['default']
-    IconTooling: typeof import('./src/components/icons/IconTooling.vue')['default']
-    InputText: typeof import('primevue/inputtext')['default']
+    copy: typeof import('./src/components/XeokitViewer copy.vue')['default']
     LeftPanel: typeof import('./src/components/LeftPanel.vue')['default']
-    MonacoEditor: typeof import('./src/components/MonacoEditor.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    TheWelcome: typeof import('./src/components/TheWelcome.vue')['default']
-    WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
     XeokitViewer: typeof import('./src/components/XeokitViewer.vue')['default']
+    XeokitViewerJakub: typeof import('./src/components/XeokitViewerJakub.vue')['default']
   }
 }

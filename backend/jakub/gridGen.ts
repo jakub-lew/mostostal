@@ -1,4 +1,4 @@
-class GridGen {
+export class GridGen {
     static main = () => {
         const INF = Number.MAX_SAFE_INTEGER;
         interface Edge { edgeNr: number, nodesPair: [number, number], distance: number }
@@ -98,6 +98,19 @@ class GridGen {
         //for(let i=1 ; i)
 
 
+    }
+    static test(){
+        return [
+            {
+                startPoint : [0,0,0],
+                endPoint : [1,1,1],
+            },
+            {
+                startPoint : [0,2,0],
+                endPoint : [1,1,1],
+            }
+             
+        ]
     }
 }
 GridGen.main();
