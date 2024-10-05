@@ -57,6 +57,8 @@ let lines = [
 //   });
 //lines = GridGen.graphEdgesToLines(GridGen.exampleGraphWithHoles());
 
+    const room = obstacles.roomBBox;
+    const span = 30;
 
      for(const obstacle of obstacles.obstacleBBoxes){
         const min = [obstacle.x, obstacle.y, obstacle.z];
@@ -75,7 +77,15 @@ let lines = [
         }
      });
 
-    for (const line of lines) {
+     let graphLines = GridGen.DuplexToLines();
+     graphLines = graphLines.map((line) => {
+        return {
+            startPoint: [line.startPoint[0], line.startPoint[2], -line.startPoint[1]],
+            endPoint: [line.endPoint[0], line.endPoint[2], -line.endPoint[1]]
+        }
+     });
+
+    for (const line of [lines, graphLines].flat()) {
     new Mesh(viewer.scene, {
         geometry: new ReadableGeometry(viewer.scene, buildLineGeometry({
             startPoint: line.startPoint,

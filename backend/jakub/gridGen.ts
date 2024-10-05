@@ -1,4 +1,5 @@
-import { Graph, GraphNode, Edge, BBox } from "./interfaces";
+import { Graph, GraphNode, Edge, BBox } from './interfaces.js'
+import obstacles from './../../frontend/server/models/Duplex_boxes.json' assert { type: "json" };
 export class GridGen {
     static coordsToIdx = (x: number, y: number, z: number, xNumber: number, yNumber: number) => (x: number, y: number, z: number) => x + y * xNumber + z * xNumber * yNumber;
     static idxToCoords = (xNumber: number, yNumber: number, idx: number) => {
@@ -24,7 +25,7 @@ export class GridGen {
             for (let y = 0; y < yNumber; y++) {
                 for (let x = 0; x < xNumber; x++) {
                     const ndNr = coordsToIdx(x, y, z);
-                    const node: GraphNode = { nr: ndNr, edges: [], pathLength: INF, parentNd: -1 };
+                    const node: GraphNode = { nr: ndNr, edges: [], pathLength: INF, parentNd: -1, x: x, y: y, z: z };
                     graph.nodes.push(node);
                     if (x > 0) {
                         {
@@ -105,20 +106,25 @@ export class GridGen {
                 }
             }
         }
-
-
-        let txt = ""
-        for (const edge of graph.edges) {
-            const start = IdxToCoords(edge.nodesPair[0]);
-            const end = IdxToCoords(edge.nodesPair[1]);
-            const newLine = `expand( {delta : 0.1}, line([[${start[0]},${start[1]}, ${start[2]}],[${end[0]},${end[1]},${end[2]}]])),`;
-            //txt += newLine;
-            // console.log(newLine);
-        }
         for (const node of graph.nodes) {
-            // console.log(`Node ${node.nr} has pathLength ${node.pathLength}`);
+            node.x = node.x * span;
+            node.y = node.y * span;
+            node.z = node.z * span;
         }
-        //for(let i=1 ; i)
+        //translate all nodes
+        for(const node of graph.nodes){
+            node.x = node.x + origin[0];
+            node.y = node.y + origin[1];
+            node.z = node.z + origin[2];
+        }
+        // for (const node of graph.nodes) {
+        //     node.x = node.x ;//+ origin[0];
+        //     node.y = node.z ;//+ origin[1];
+        //     node.z = -node.y ;//+ origin[2];
+        // }
+        // const oldY = graph.yNumber;
+        // graph.yNumber = graph.zNumber;
+        // graph.zNumber = oldY;
         return graph;
 
     }
@@ -202,8 +208,8 @@ export class GridGen {
         const graph = this.generateGrid([room.x, room.y, room.z], span, xNumber, yNumber, zNumber);
         const edgesToDel: Edge[] = [];
         for (const edge of graph.edges) {
-            const start = this.idxToCoords(xNumber, yNumber, edge.nodesPair[0]);
-            const end = this.idxToCoords(xNumber, yNumber, edge.nodesPair[1]);
+            const start = [graph.nodes[edge.nodesPair[0]].x, graph.nodes[edge.nodesPair[0]].y, graph.nodes[edge.nodesPair[0]].z];
+            const end = [graph.nodes[edge.nodesPair[1]].x, graph.nodes[edge.nodesPair[1]].y, graph.nodes[edge.nodesPair[1]].z];
             for (const obstacle of obstacles) {
                 if (start[0] >= obstacle.x && start[0] <= obstacle.x + obstacle.xDist &&
                     start[1] >= obstacle.y && start[1] <= obstacle.y + obstacle.yDist &&
@@ -232,12 +238,10 @@ export class GridGen {
         const yNumber = graph.yNumber;
         const zNumber = graph.zNumber;
 
-        const coordsToIdx = (x: number, y: number, z: number) => x + y * xNumber + z * xNumber * yNumber;
+
         const IdxToCoords = (idx: number) => {
-            const x = idx % xNumber;
-            const y = Math.floor(idx / xNumber) % yNumber;
-            const z = Math.floor(idx / (xNumber * yNumber));
-            return [x, y, z];
+            return [graph.nodes[idx].x, graph.nodes[idx].y, graph.nodes[idx].z];
+
         }
 
         const lines = [];
@@ -285,5 +289,12 @@ export class GridGen {
         ];
 
     }
+    static DuplexToLines() {
+        const graph = GridGen.createGrid(obstacles.roomBBox, []/*obstacles.obstacleBBoxes*/, 3);
+        const lines = GridGen.graphEdgesToLines(graph);
+        return lines;
+    }
 }
+console.log(GridGen.DuplexToLines());
+
 //console.log(GridGen.exportToJSON(GridGen.generateGrid([5, 5, 5], 10, 2, 2, 2)))

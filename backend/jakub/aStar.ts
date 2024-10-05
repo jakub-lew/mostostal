@@ -1,4 +1,4 @@
-import { Graph, GraphNode, } from './interfaces';
+import { Graph, GraphNode, } from './interfaces.js';
 
 class aStarClass {
     static main = (graph : Graph, startNode : number, endNode : number) => {
