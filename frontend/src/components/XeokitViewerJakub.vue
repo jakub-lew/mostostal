@@ -57,22 +57,22 @@ let lines = [
 //lines = GridGen.graphEdgesToLines(GridGen.exampleGraphWithHoles());
 
 
-     for(const obstacle of obstacles.obstacleBBoxes){
-        const min = [obstacle.x, obstacle.y, obstacle.z];
-        const max = [obstacle.x + obstacle.xDist, obstacle.y + obstacle.yDist, obstacle.z + obstacle.zDist];
-        //startPoint and endPoints are diagonal of box. Create 6 lines to create box
-        const bboxLines = GridGen.BBoxesToLines(min, max);
-        for(const line of bboxLines){
-            lines.push(line);
-        }
+    //  for(const obstacle of obstacles.obstacleBBoxes){
+    //     const min = [obstacle.x, obstacle.y, obstacle.z];
+    //     const max = [obstacle.x + obstacle.xDist, obstacle.y + obstacle.yDist, obstacle.z + obstacle.zDist];
+    //     //startPoint and endPoints are diagonal of box. Create 6 lines to create box
+    //     const bboxLines = GridGen.BBoxesToLines(min, max);
+    //     for(const line of bboxLines){
+    //         lines.push(line);
+    //     }
 
-     }
-     lines = lines.map((line) => {
-        return {
-            startPoint: [line.startPoint[0], line.startPoint[2], -line.startPoint[1]],
-            endPoint: [line.endPoint[0], line.endPoint[2], -line.endPoint[1]]
-        }
-     });
+    //  }
+    //  lines = lines.map((line) => {
+    //     return {
+    //         startPoint: [line.startPoint[0], line.startPoint[2], -line.startPoint[1]],
+    //         endPoint: [line.endPoint[0], line.endPoint[2], -line.endPoint[1]]
+    //     }
+    //  });
 
     for (const line of lines) {
     new Mesh(viewer.scene, {
@@ -97,13 +97,13 @@ let lines = [
         })
     });
 
-    const xktLoader = new XKTLoaderPlugin(viewer);
+    // const xktLoader = new XKTLoaderPlugin(viewer);
 
-    const sceneModel = xktLoader.load({
-        id: "myModel",
-        src: `http://127.0.0.1:5200/example.xkt`,
-        edges: true,
-    });
+    // const sceneModel = xktLoader.load({
+    //     id: "myModel",
+    //     src: `http://127.0.0.1:5200/example.xkt`,
+    //     edges: true,
+    // });
 
 });
 
