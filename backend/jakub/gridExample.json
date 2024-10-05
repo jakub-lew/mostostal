@@ -1,0 +1,54 @@
+{
+  "span": 10,
+  "grid": {
+    "nodes": [
+      {
+        "nodeNr": 0,
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      {
+        "nodeNr": 1,
+        "x": 10,
+        "y": 0,
+        "z": 0
+      },
+      {
+        "nodeNr": 2,
+        "x": 20,
+        "y": 0,
+        "z": 0
+      }
+    ],
+    "edges": [
+      {
+        "edgeNr": 0,
+        "node1": 0,
+        "node2": 1
+      },
+      {
+        "edgeNr": 1,
+        "node1": 1,
+        "node2": 2
+      }
+    ],
+    "graph": {
+      "description": "this can be post-processed but for convenience it is included here",
+      "nodeEdges": [
+        {
+          "nodeNr": 0,
+          "edges": [0]
+        },
+        {
+          "nodeNr": 1,
+          "edges": [0, 1]
+        },
+        {
+          "nodeNr": 2,
+          "edges": [1]
+        }
+      ]
+    }
+  }
+}
