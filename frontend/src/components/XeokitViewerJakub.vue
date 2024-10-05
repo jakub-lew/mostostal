@@ -5,6 +5,7 @@ import { useRoute } from 'vue-router';
 import {buildLineGeometry, buildSphereGeometry, Viewer, Mesh, ReadableGeometry, PhongMaterial} from '@xeokit/xeokit-sdk';
 import { GridGen} from '../../../backend/jakub/gridGen';
 import * as data from '../../../backend/jakub/exampleForTomek.json';
+import * as obstacles from '../../../backend/dawid/bboxes-example.json';
 
 const route = useRoute()
 const fileName = route.params['name']
@@ -51,7 +52,20 @@ let lines = [
 //        endPoint: [coords2.x, coords2.y, coords2.z]
 //    });
 //   });
-lines = GridGen.graphEdgesToLines(GridGen.exampleGraphWithHoles());
+//lines = GridGen.graphEdgesToLines(GridGen.exampleGraphWithHoles());
+
+
+     for(const obstacle of obstacles.obstacleBBoxes){
+        const min = [obstacle.x, obstacle.y, obstacle.z];
+        const max = [obstacle.x + obstacle.xDist, obstacle.y + obstacle.yDist, obstacle.z + obstacle.zDist];
+        //startPoint and endPoints are diagonal of box. Create 6 lines to create box
+        const bboxLines = GridGen.BBoxesToLines(min, max);
+        for(const line of bboxLines){
+            lines.push(line);
+        }
+
+     }
+
     for (const line of lines) {
     new Mesh(viewer.scene, {
         geometry: new ReadableGeometry(viewer.scene, buildLineGeometry({
@@ -75,13 +89,13 @@ lines = GridGen.graphEdgesToLines(GridGen.exampleGraphWithHoles());
         })
     });
 
-    // const xktLoader = new XKTLoaderPlugin(viewer);
+    const xktLoader = new XKTLoaderPlugin(viewer);
 
-    // const sceneModel = xktLoader.load({
-    //     id: "myModel",
-    //     src: `http://127.0.0.1:5200/${fileName}.xkt`,
-    //     edges: true,
-    // });
+    const sceneModel = xktLoader.load({
+        id: "myModel",
+        src: `http://127.0.0.1:5200/example.xkt`,
+        edges: true,
+    });
 
 });
 

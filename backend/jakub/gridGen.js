@@ -122,6 +122,36 @@ export class GridGen {
         ;
         return lines;
     }
+    static BBoxesToLines(min, max) {
+        const squares = [
+            [
+                [min[0], min[1], min[2]],
+                [min[0], max[1], min[2]],
+                [max[0], max[1], min[2]],
+                [max[0], min[1], min[2]],
+            ],
+            [
+                [min[0], min[1], max[2]],
+                [min[0], max[1], max[2]],
+                [max[0], max[1], max[2]],
+                [max[0], min[1], max[2]],
+            ],
+        ];
+        return [
+            { startPoint: squares[0][0], endPoint: squares[0][1] },
+            { startPoint: squares[0][1], endPoint: squares[0][2] },
+            { startPoint: squares[0][2], endPoint: squares[0][3] },
+            { startPoint: squares[0][3], endPoint: squares[0][0] },
+            { startPoint: squares[1][0], endPoint: squares[1][1] },
+            { startPoint: squares[1][1], endPoint: squares[1][2] },
+            { startPoint: squares[1][2], endPoint: squares[1][3] },
+            { startPoint: squares[1][3], endPoint: squares[1][0] },
+            { startPoint: squares[0][0], endPoint: squares[1][0] },
+            { startPoint: squares[0][1], endPoint: squares[1][1] },
+            { startPoint: squares[0][2], endPoint: squares[1][2] },
+            { startPoint: squares[0][3], endPoint: squares[1][3] },
+        ];
+    }
 }
 GridGen.coordsToIdx = (x, y, z, xNumber, yNumber) => (x, y, z) => x + y * xNumber + z * xNumber * yNumber;
 GridGen.idxToCoords = (xNumber, yNumber, idx) => {
