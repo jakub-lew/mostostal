@@ -7,9 +7,9 @@ import SplitterPanel from 'primevue/splitterpanel';
 
 <template>
   <Splitter class="h-screen">
-    <SplitterPanel class="flex items-center justify-center p-2" :size="25" :minSize="10">
+    <!-- <SplitterPanel class="flex items-center justify-center p-2" :size="25" :minSize="10">
       <LeftPanel></LeftPanel>
-    </SplitterPanel>
+    </SplitterPanel> -->
     <SplitterPanel class="flex items-center justify-center class p-2" :size="75">
       <XeokitViewerJakub />
     </SplitterPanel>

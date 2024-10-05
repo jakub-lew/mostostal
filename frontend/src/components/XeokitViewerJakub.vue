@@ -3,16 +3,19 @@ import { XKTLoaderPlugin, WebIFCLoaderPlugin } from '@xeokit/xeokit-sdk';
 import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import {buildLineGeometry, buildSphereGeometry, Viewer, Mesh, ReadableGeometry, PhongMaterial} from '@xeokit/xeokit-sdk';
-import { GridGen} from '../../../backend/jakub/gridGen';
-import * as data from '../../../backend/jakub/exampleForTomek.json';
+import { GridGen} from '@/utils/pathfinding/gridGen'
+// import * as data from '../../../backend/jakub/exampleForTomek.json';
 //import * as obstacles from '../../../backend/dawid/bboxes-global-coordinates.json';
 // import * as obstacles from '../../../frontend/server/models/BUILDING_boxes.json';
-import * as obstacles from '../../../frontend/server/models/Duplex_boxes.json';
+// import * as obstacles from '../../../frontend/server/models/Duplex_boxes.json';
+import { bboxes, type Bbox } from '@/utils/pathfinding/bboxes';
 import { checkLine } from '@/utils/check-line';
-import { Result } from 'postcss';
 
 const route = useRoute()
-const fileName = route.params['name']
+const fileName = route
+
+const obstacles: Bbox = bboxes["Duplex"];
+
 
 onMounted(() => {
     const viewer = new Viewer({

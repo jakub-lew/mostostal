@@ -1,4 +1,4 @@
-import { Graph, GraphNode, } from './interfaces.js';
+import { type Graph, type GraphNode, } from './interfaces';
 
 class aStarClass {
     static main = (graph : Graph, startNode : number, endNode : number) => {
@@ -7,14 +7,14 @@ class aStarClass {
         }
         const CoordsToIdx = (x : number, y : number) : number => {
             return y * graph.xNumber + x;
-        }        
+        }
          const INF = Number.MAX_SAFE_INTEGER;
-     
+
         //define start vertex
         graph.nodes[startNode].pathLength = 0;
 
         const nodesToVisit: Set<GraphNode> = new Set();
-        
+
         nodesToVisit.add(graph.nodes[0]);
         while (nodesToVisit.size > 0) {
             //set to array
@@ -33,10 +33,9 @@ class aStarClass {
                 console.log(`Checking idx ${neighborIdx}}`);
                 const neighborNode = graph.nodes[neighborIdx];
                 const newPath = node.pathLength + edge.distance;
-                if (neighborNode.pathLength == INF) {
+                // if (neighborNode.pathLength == INF) {
 
-
-                }
+                // }
                 if (newPath < neighborNode.pathLength) {
                     nodesToVisit.add(neighborNode);
                     //console.log(`Adding ${neighborIdx}`)

@@ -1,5 +1,7 @@
-import { Graph, GraphNode, Edge, BBox } from './interfaces.js'
-import obstacles from './../../frontend/server/models/Duplex_boxes.json' assert { type: "json" };
+import { type Graph, type GraphNode, type Edge, type BBox } from './interfaces'
+import { bboxes } from './bboxes';
+const obstacles = bboxes["Duplex"]
+// import obstacles from './../../frontend/server/models/Duplex_boxes.json' assert { type: "json" };
 export class GridGen {
     static coordsToIdx = (x: number, y: number, z: number, xNumber: number, yNumber: number) => (x: number, y: number, z: number) => x + y * xNumber + z * xNumber * yNumber;
     static idxToCoords = (xNumber: number, yNumber: number, idx: number) => {
