@@ -1,5 +1,16 @@
-"use strict";
-class GridGen {
+export class GridGen {
+    static test() {
+        return [
+            {
+                startPoint: [0, 0, 0],
+                endPoint: [1, 1, 1],
+            },
+            {
+                startPoint: [0, 2, 0],
+                endPoint: [1, 1, 1],
+            }
+        ];
+    }
 }
 GridGen.main = () => {
     const INF = Number.MAX_SAFE_INTEGER;

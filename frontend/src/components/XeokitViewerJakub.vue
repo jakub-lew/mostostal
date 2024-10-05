@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import { Viewer, XKTLoaderPlugin, WebIFCLoaderPlugin } from '@xeokit/xeokit-sdk';
+import { XKTLoaderPlugin, WebIFCLoaderPlugin } from '@xeokit/xeokit-sdk';
 import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
+import {buildLineGeometry, buildSphereGeometry, Viewer, Mesh, ReadableGeometry, PhongMaterial} from '@xeokit/xeokit-sdk';
+import { GridGen} from '../../../backend/jakub/gridGen';
+
 
 const route = useRoute()
 const fileName = route.params['name']
@@ -13,17 +16,61 @@ onMounted(() => {
         dtxEnabled: true
     });
 
-    viewer.camera.eye = [-3.933, 2.855, 27.018];
-    viewer.camera.look = [4.400, 3.724, 8.899];
-    viewer.camera.up = [-0.018, 0.999, 0.039];
 
-    const xktLoader = new XKTLoaderPlugin(viewer);
 
-    const sceneModel = xktLoader.load({
-        id: "myModel",
-        src: `http://127.0.0.1:5200/${fileName}.xkt`,
-        edges: true,
+
+    viewer.camera.eye = [0, 0, 8];
+    viewer.camera.look = [0, 0, 0];
+    viewer.camera.up = [0, 1, 0];
+
+    //------------------------------------------------------------------------------------------------------------------
+    // Create a mesh with simple 2d line shape
+    //------------------------------------------------------------------------------------------------------------------
+let lines = [
+    {
+        startPoint: [-5,-2,0],
+        endPoint: [-5,2,0],
+    },
+    {
+        startPoint: [-5,2,0],
+        endPoint: [5,2,0],
+    },
+    {
+        startPoint: [5,2,0],
+        endPoint: [5,-2,0],
+    }
+];
+//lines = GridGen.test();
+ for (const line of lines) {
+    new Mesh(viewer.scene, {
+        geometry: new ReadableGeometry(viewer.scene, buildLineGeometry({
+            startPoint: line.startPoint,
+            endPoint: line.endPoint,
+        })),
+        material: new PhongMaterial(viewer.scene, {
+            emissive: [0, 1,]
+        })
+    });}
+    new Mesh(viewer.scene, {
+        geometry: new ReadableGeometry(viewer.scene, buildSphereGeometry({
+            radius: 1.5,
+            heightSegments: 60,
+            widthSegments: 60
+        })),
+        material: new PhongMaterial(viewer.scene, {
+            ambient: [0.9, 0.3, 0.9],
+            shininess: 30,
+
+        })
     });
+
+    // const xktLoader = new XKTLoaderPlugin(viewer);
+
+    // const sceneModel = xktLoader.load({
+    //     id: "myModel",
+    //     src: `http://127.0.0.1:5200/${fileName}.xkt`,
+    //     edges: true,
+    // });
 
 });
 
