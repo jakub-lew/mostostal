@@ -6,6 +6,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { allowedModels } from '@/utils/config';
 import { storeToRefs } from 'pinia'
 import { useMainStore, type Vector3d } from '@/stores/main';
+import { bboxes } from "@/utils/pathfinding/bboxes";
 
 
 const mainStore = useMainStore()
@@ -18,13 +19,17 @@ const fileName = route.params['name'] as string
 let viewer: Viewer | null
 
 
-
 if (!allowedModels.includes(fileName)) {
   console.warn("File name not supported")
   router.push({ name: "home" })
 }
+const obstacles = bboxes[`${fileName}`]
+console.log(obstacles)
 
 onMounted(() => {
+  console.log("")
+
+
   viewer = new Viewer({
     canvasId: "xeokit_canvas",
     transparent: true,
