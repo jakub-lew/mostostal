@@ -17,22 +17,6 @@ const router = useRouter()
 const fileName = route.params['name'] as string
 let viewer: Viewer | null
 
-function drawLine(startPoint: Vector3d, endPoint: Vector3d) {
-  if (!viewer) {
-    console.warn("Viewer not initialized")
-    return
-  }
-  new Mesh(viewer.scene, {
-        geometry: new ReadableGeometry(viewer.scene, buildLineGeometry({
-            startPoint: startPoint,
-            endPoint: endPoint,
-        })),
-        material: new PhongMaterial(viewer.scene, {
-            emissive: [0, 1,]
-        })
-    })
-}
-
 
 
 if (!allowedModels.includes(fileName)) {
@@ -389,9 +373,6 @@ viewer.scene.canvas.canvas.addEventListener('contextmenu', (event) => {
 </script>
 
 <template>
-  <button @click="drawLine(startPoint, endPoint)">
-    Draw Line
-  </button>
   <canvas id="xeokit_canvas"></canvas>
 </template>
 
