@@ -24,7 +24,7 @@ export class GridGen {
             for (let y = 0; y < yNumber; y++) {
                 for (let x = 0; x < xNumber; x++) {
                     const ndNr = coordsToIdx(x, y, z);
-                    const node: GraphNode = { nr: ndNr, edges: [], pathLength: INF };
+                    const node: GraphNode = { nr: ndNr, edges: [], pathLength: INF, parentNd: -1 };
                     graph.nodes.push(node);
                     if (x > 0) {
                         {
