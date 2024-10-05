@@ -1,9 +1,10 @@
+interface Edge { edgeNr: number, nodesPair: [number, number], distance: number }
+interface GraphNode { nr: number, edges: Edge[], pathLength: number }
+interface Graph { nodes: GraphNode[], edges: Edge[] }
 export class GridGen {
-    static generateGrid = (origin: [number, number, number], span : number, xNumber : number, yNumber : number, zNumber : number) => {
+    static generateGrid = (origin: [number, number, number], span: number, xNumber: number, yNumber: number, zNumber: number) => {
         const INF = Number.MAX_SAFE_INTEGER;
-        interface Edge { edgeNr: number, nodesPair: [number, number], distance: number }
-        interface GraphNode { nr: number, edges: Edge[], pathLength: number }
-        interface Graph { nodes: GraphNode[], edges: Edge[] }
+
         const graph: Graph = { nodes: [], edges: [] };
         // create neighbors
         const coordsToIdx = (x: number, y: number, z: number) => x + y * xNumber + z * xNumber * yNumber;
@@ -37,8 +38,8 @@ export class GridGen {
                             node.edges.push(edge);
                             neighborNd.edges.push(edge);
                         }
-                        if(x < xNumber-1) {
-                            const neighborNd = graph.nodes[coordsToIdx(x+1, y-1, z)];
+                        if (x < xNumber - 1) {
+                            const neighborNd = graph.nodes[coordsToIdx(x + 1, y - 1, z)];
                             const edge: Edge = { edgeNr: graph.edges.length, nodesPair: [ndNr, neighborNd.nr], distance: span * Math.sqrt(2) };
                             graph.edges.push(edge);
                             node.edges.push(edge);
@@ -53,15 +54,15 @@ export class GridGen {
                             node.edges.push(edge);
                             neighborNd.edges.push(edge);
                         }
-                        if(x < xNumber-1) {
-                            const neighborNd = graph.nodes[coordsToIdx(x+1, y, z-1)];
+                        if (x < xNumber - 1) {
+                            const neighborNd = graph.nodes[coordsToIdx(x + 1, y, z - 1)];
                             const edge: Edge = { edgeNr: graph.edges.length, nodesPair: [ndNr, neighborNd.nr], distance: span * Math.sqrt(2) };
                             graph.edges.push(edge);
                             node.edges.push(edge);
                             neighborNd.edges.push(edge);
                         }
-                        if(y < yNumber-1) {
-                            const neighborNd = graph.nodes[coordsToIdx(x, y+1, z-1)];
+                        if (y < yNumber - 1) {
+                            const neighborNd = graph.nodes[coordsToIdx(x, y + 1, z - 1)];
                             const edge: Edge = { edgeNr: graph.edges.length, nodesPair: [ndNr, neighborNd.nr], distance: span * Math.sqrt(2) };
                             graph.edges.push(edge);
                             node.edges.push(edge);
@@ -107,10 +108,10 @@ export class GridGen {
             const end = IdxToCoords(edge.nodesPair[1]);
             const newLine = `expand( {delta : 0.1}, line([[${start[0]},${start[1]}, ${start[2]}],[${end[0]},${end[1]},${end[2]}]])),`;
             //txt += newLine;
-           // console.log(newLine);
+            // console.log(newLine);
         }
         for (const node of graph.nodes) {
-           // console.log(`Node ${node.nr} has pathLength ${node.pathLength}`);
+            // console.log(`Node ${node.nr} has pathLength ${node.pathLength}`);
         }
         //for(let i=1 ; i)
         return graph;
@@ -129,7 +130,7 @@ export class GridGen {
             const z = Math.floor(idx / (xNumber * yNumber));
             return [x, y, z];
         }
-        const graph = this.generateGrid([5,5,5], span, xNumber, yNumber, zNumber);
+        const graph = this.generateGrid([5, 5, 5], span, xNumber, yNumber, zNumber);
         const lines = [];
         for (const edge of graph.edges) {
             const start = IdxToCoords(edge.nodesPair[0]);
@@ -138,9 +139,33 @@ export class GridGen {
                 startPoint: start,
                 endPoint: end,
             });
-            
+
         };
         return lines;
     }
+    static exportToJSON(graph: Graph){
+        const nodes = graph.nodes.map((node) => {
+            return {
+                nr: node.nr,
+                pathLength: node.pathLength,
+                edges: node.edges.map((edge) => {
+                    return {
+                        edgeNr: edge.edgeNr,
+                        nodesPair: edge.nodesPair,
+                        distance: edge.distance,
+                    }
+                })
+            }
+        });
+        const edges = graph.edges.map((edge) => {
+            return {
+                edgeNr: edge.edgeNr,
+                nodesPair: edge.nodesPair,
+                distance: edge.distance,
+            }
+        });
+        return {nodes, edges};
+    }
 }
-//GridGen.generateGrid();
+GridGen.exportToJSON(GridGen.generateGrid([5, 5, 5], 10, 2, 1, 1));
+

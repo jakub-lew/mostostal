@@ -64,13 +64,13 @@ lines = GridGen.test();
         })
     });
 
-    const xktLoader = new XKTLoaderPlugin(viewer);
+    // const xktLoader = new XKTLoaderPlugin(viewer);
 
-    const sceneModel = xktLoader.load({
-        id: "myModel",
-        src: `http://127.0.0.1:5200/${fileName}.xkt`,
-        edges: true,
-    });
+    // const sceneModel = xktLoader.load({
+    //     id: "myModel",
+    //     src: `http://127.0.0.1:5200/${fileName}.xkt`,
+    //     edges: true,
+    // });
 
 });
 

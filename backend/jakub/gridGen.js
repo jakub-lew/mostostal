@@ -25,6 +25,29 @@ export class GridGen {
         ;
         return lines;
     }
+    static exportToJSON(graph) {
+        const nodes = graph.nodes.map((node) => {
+            return {
+                nr: node.nr,
+                pathLength: node.pathLength,
+                edges: node.edges.map((edge) => {
+                    return {
+                        edgeNr: edge.edgeNr,
+                        nodesPair: edge.nodesPair,
+                        distance: edge.distance,
+                    };
+                })
+            };
+        });
+        const edges = graph.edges.map((edge) => {
+            return {
+                edgeNr: edge.edgeNr,
+                nodesPair: edge.nodesPair,
+                distance: edge.distance,
+            };
+        });
+        return { nodes, edges };
+    }
 }
 GridGen.generateGrid = (origin, span, xNumber, yNumber, zNumber) => {
     const INF = Number.MAX_SAFE_INTEGER;
@@ -135,5 +158,5 @@ GridGen.generateGrid = (origin, span, xNumber, yNumber, zNumber) => {
     //for(let i=1 ; i)
     return graph;
 };
-//GridGen.generateGrid();
+GridGen.exportToJSON(GridGen.generateGrid([5, 5, 5], 10, 2, 1, 1));
 //# sourceMappingURL=gridGen.js.map
