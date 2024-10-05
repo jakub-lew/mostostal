@@ -6,9 +6,9 @@ export class GridGen {
         interface Graph { nodes: GraphNode[], edges: Edge[] }
         const graph: Graph = { nodes: [], edges: [] };
         // create neighbors
-        const xNumber = 2
-        const yNumber = 2;
-        const zNumber = 2;
+        const xNumber = 5
+        const yNumber = 5;
+        const zNumber = 5;
         const span = 10;
         const coordsToIdx = (x: number, y: number, z: number) => x + y * xNumber + z * xNumber * yNumber;
         const IdxToCoords = (idx: number) => {
@@ -89,27 +89,56 @@ export class GridGen {
             const start = IdxToCoords(edge.nodesPair[0]);
             const end = IdxToCoords(edge.nodesPair[1]);
             const newLine = `expand( {delta : 0.1}, line([[${start[0]},${start[1]}, ${start[2]}],[${end[0]},${end[1]},${end[2]}]])),`;
-            txt += newLine;
-            console.log(newLine);
+            //txt += newLine;
+           // console.log(newLine);
         }
         for (const node of graph.nodes) {
-            console.log(`Node ${node.nr} has pathLength ${node.pathLength}`);
+           // console.log(`Node ${node.nr} has pathLength ${node.pathLength}`);
         }
         //for(let i=1 ; i)
-
+        return graph;
 
     }
-    static test(){
+    static test() {
+        // create neighbors
+        const xNumber = 5
+        const yNumber = 5;
+        const zNumber = 5;
+        const span = 10;
+        const coordsToIdx = (x: number, y: number, z: number) => x + y * xNumber + z * xNumber * yNumber;
+        const IdxToCoords = (idx: number) => {
+            const x = idx % xNumber;
+            const y = Math.floor(idx / xNumber) % yNumber;
+            const z = Math.floor(idx / (xNumber * yNumber));
+            return [x, y, z];
+        }
+        const graph = this.main();
+        const lines = [];
+        for (const edge of graph.edges) {
+            const start = IdxToCoords(edge.nodesPair[0]);
+            const end = IdxToCoords(edge.nodesPair[1]);
+            lines.push({
+                startPoint: start,
+                endPoint: end,
+            });
+            
+        };
+        return lines;
+
         return [
             {
-                startPoint : [0,0,0],
-                endPoint : [1,1,1],
+                startPoint: [0, 0, 0],
+                endPoint: [1, 1, 1],
             },
             {
-                startPoint : [0,2,0],
-                endPoint : [1,1,1],
+                startPoint: [0, 2, 0],
+                endPoint: [1, 1, 1],
+            },
+            {
+                startPoint: [0, 0, 0],
+                endPoint: [91, 91, 91],
             }
-             
+
         ]
     }
 }

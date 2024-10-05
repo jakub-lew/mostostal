@@ -1,5 +1,29 @@
 export class GridGen {
     static test() {
+        // create neighbors
+        const xNumber = 5;
+        const yNumber = 5;
+        const zNumber = 5;
+        const span = 10;
+        const coordsToIdx = (x, y, z) => x + y * xNumber + z * xNumber * yNumber;
+        const IdxToCoords = (idx) => {
+            const x = idx % xNumber;
+            const y = Math.floor(idx / xNumber) % yNumber;
+            const z = Math.floor(idx / (xNumber * yNumber));
+            return [x, y, z];
+        };
+        const graph = this.main();
+        const lines = [];
+        for (const edge of graph.edges) {
+            const start = IdxToCoords(edge.nodesPair[0]);
+            const end = IdxToCoords(edge.nodesPair[1]);
+            lines.push({
+                startPoint: start,
+                endPoint: end,
+            });
+        }
+        ;
+        return lines;
         return [
             {
                 startPoint: [0, 0, 0],
@@ -8,6 +32,10 @@ export class GridGen {
             {
                 startPoint: [0, 2, 0],
                 endPoint: [1, 1, 1],
+            },
+            {
+                startPoint: [0, 0, 0],
+                endPoint: [91, 91, 91],
             }
         ];
     }
@@ -16,9 +44,9 @@ GridGen.main = () => {
     const INF = Number.MAX_SAFE_INTEGER;
     const graph = { nodes: [], edges: [] };
     // create neighbors
-    const xNumber = 2;
-    const yNumber = 2;
-    const zNumber = 2;
+    const xNumber = 5;
+    const yNumber = 5;
+    const zNumber = 5;
     const span = 10;
     const coordsToIdx = (x, y, z) => x + y * xNumber + z * xNumber * yNumber;
     const IdxToCoords = (idx) => {
@@ -95,13 +123,14 @@ GridGen.main = () => {
         const start = IdxToCoords(edge.nodesPair[0]);
         const end = IdxToCoords(edge.nodesPair[1]);
         const newLine = `expand( {delta : 0.1}, line([[${start[0]},${start[1]}, ${start[2]}],[${end[0]},${end[1]},${end[2]}]])),`;
-        txt += newLine;
-        console.log(newLine);
+        //txt += newLine;
+        // console.log(newLine);
     }
     for (const node of graph.nodes) {
-        console.log(`Node ${node.nr} has pathLength ${node.pathLength}`);
+        // console.log(`Node ${node.nr} has pathLength ${node.pathLength}`);
     }
     //for(let i=1 ; i)
+    return graph;
 };
 GridGen.main();
 //# sourceMappingURL=gridGen.js.map

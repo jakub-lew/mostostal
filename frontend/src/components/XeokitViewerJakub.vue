@@ -40,7 +40,7 @@ let lines = [
         endPoint: [5,-2,0],
     }
 ];
-//lines = GridGen.test();
+lines = GridGen.test();
  for (const line of lines) {
     new Mesh(viewer.scene, {
         geometry: new ReadableGeometry(viewer.scene, buildLineGeometry({
@@ -53,7 +53,7 @@ let lines = [
     });}
     new Mesh(viewer.scene, {
         geometry: new ReadableGeometry(viewer.scene, buildSphereGeometry({
-            radius: 1.5,
+            radius: 0.5,
             heightSegments: 60,
             widthSegments: 60
         })),
