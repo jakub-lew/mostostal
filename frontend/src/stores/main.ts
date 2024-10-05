@@ -4,7 +4,6 @@ import { defineStore } from 'pinia'
 export type Vector3d = [number, number, number]
 export type Line3d = [Vector3d, Vector3d]
 
-
 export const useMainStore = defineStore('main', () => {
   const startPoint: Ref<Vector3d> = ref([0,0,0])
   const endPoint: Ref<Vector3d> = ref([1,2,3])

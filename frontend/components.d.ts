@@ -11,6 +11,7 @@ declare module 'vue' {
     LeftPanel: typeof import('./src/components/LeftPanel.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    TomekXeokitViewer: typeof import('./src/components/TomekXeokitViewer.vue')['default']
     XeokitViewer: typeof import('./src/components/XeokitViewer.vue')['default']
     XeokitViewerJakub: typeof import('./src/components/XeokitViewerJakub.vue')['default']
   }
