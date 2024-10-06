@@ -137,14 +137,14 @@ let lines = [
         })
     });
 
-    const xktLoader = new XKTLoaderPlugin(viewer);
+    // const xktLoader = new XKTLoaderPlugin(viewer);
 
-    const sceneModel = xktLoader.load({
-        id: "myModel",
-        src: `http://127.0.0.1:5200/BUILDING.xkt`,
-        edges: true,
-    });
-    sceneModel.xrayed = true;
+    // const sceneModel = xktLoader.load({
+    //     id: "myModel",
+    //     src: `http://127.0.0.1:5200/BUILDING.xkt`,
+    //     edges: true,
+    // });
+    // sceneModel.xrayed = true;
 
 });
 

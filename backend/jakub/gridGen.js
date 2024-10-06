@@ -14,7 +14,7 @@ export class GridGen {
             const z = Math.floor(idx / (xNumber * yNumber));
             return [x, y, z];
         };
-        const graph = this.generateGrid([5, 5, 5], span, xNumber, yNumber, zNumber);
+        const graph = this.generateGrid([5, 5, 5], span, xNumber, yNumber, zNumber, 5, 5, 5);
         const lines = [];
         for (const edge of graph.edges) {
             const start = IdxToCoords(edge.nodesPair[0]);
@@ -74,7 +74,7 @@ export class GridGen {
         const xNumber = Math.floor(room.xDist / span);
         const yNumber = Math.floor(room.yDist / span);
         const zNumber = Math.floor(room.zDist / span);
-        const graph = this.generateGrid([room.x, room.y, room.z], span, xNumber, yNumber, zNumber);
+        const graph = this.generateGrid([room.x, room.y, room.z], span, xNumber, yNumber, zNumber, room.xDist, room.yDist, room.zDist);
         const edgesToDel = [];
         for (const edge of graph.edges) {
             const start = [graph.nodes[edge.nodesPair[0]].x, graph.nodes[edge.nodesPair[0]].y, graph.nodes[edge.nodesPair[0]].z];
@@ -171,7 +171,7 @@ export class GridGen {
         return nodes;
     }
     static BuildingToGraph() {
-        return GridGen.createGrid(obstacles.roomBBox, obstacles.obstacleBBoxes, 2);
+        return GridGen.createGrid(obstacles.roomBBox, obstacles.obstacleBBoxes, 1.7);
     }
     static BuildingToLines() {
         const graph = this.BuildingToGraph();
@@ -186,7 +186,7 @@ GridGen.idxToCoords = (xNumber, yNumber, idx) => {
     const z = Math.floor(idx / (xNumber * yNumber));
     return [x, y, z];
 };
-GridGen.generateGrid = (origin, span, xNumber, yNumber, zNumber) => {
+GridGen.generateGrid = (origin, span, xNumber, yNumber, zNumber, realX, realY, realZ) => {
     const INF = Number.MAX_SAFE_INTEGER;
     const graph = { nodes: [], edges: [], span: span, xNumber: xNumber, yNumber: yNumber, zNumber: zNumber };
     // create neighbors
@@ -291,6 +291,14 @@ GridGen.generateGrid = (origin, span, xNumber, yNumber, zNumber) => {
         node.x = node.x + origin[0];
         node.y = node.y + origin[1];
         node.z = node.z + origin[2];
+    }
+    const xDiff = realX - xNumber * span;
+    const yDiff = realY - yNumber * span;
+    const zDiff = realZ - zNumber * span;
+    for (const node of graph.nodes) {
+        node.x = node.x + xDiff / 2;
+        node.y = node.y + yDiff / 2;
+        node.z = node.z + zDiff / 2;
     }
     // for (const node of graph.nodes) {
     //     node.x = node.x ;//+ origin[0];
