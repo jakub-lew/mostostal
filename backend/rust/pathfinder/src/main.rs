@@ -7,7 +7,7 @@ use pathfinder::{
         vector::{Vector3, Vector4},
     },
     mesh,
-    path::{AllowInterior, DisallowInterior, Grid, Neg, Octtree},
+    path::{AllowInterior, DisallowInterior, Grid, Neg, Octtree, PathfindingPath},
     scene::Scene,
 };
 use std::{collections::HashMap, error::Error, path::Path, time::Instant};
@@ -20,12 +20,14 @@ use winit::{
     window::{Window, WindowAttributes, WindowButtons},
 };
 
-const SCENE_PATH: &'static str = &"../../../frontend/server/models/Duplex_boxes.json";
-const PATH_PATH: &'static str = &"../../../backend/tomek/models/Duplex_boxes.json";
-// const SCENE_PATH: &'static str = &"../../../frontend/server/models/Duplex_boxes.json";
-
 const GRID_TYPES: &'static [&'static str] = &["grid", "grid_neg", "octtree"];
 const SHADER_TYPES: &'static [&'static str] = &["none", "wire", "fill"];
+
+// const SCENE_PATH: &'static str = &"../../../frontend/server/models/Duplex_boxes.json";
+// const PATH_PATH: Option<&'static str> = None;
+
+const PATH_PATH: Option<&'static str> = Some(&"../../../backend/pathfinder/4.json");
+const SCENE_PATH: &'static str = &"../../../frontend/server/models/BUILDING_boxes.json";
 
 enum CursorState {
     Free,
@@ -74,11 +76,19 @@ impl ApplicationHandler for Application {
                 .unwrap(),
         );
         self.renderer = Some(Renderer::new(self.window.as_ref().unwrap()).unwrap());
+        let mut meshes = vec![mesh::cube_solid(), mesh::cube_wire()];
         let renderer = self.renderer.as_mut().unwrap();
-        let meshes = vec![mesh::cube_solid(), mesh::cube_wire()];
+        if let Some(path_str) = PATH_PATH {
+            let path = PathfindingPath::load(&Path::new(path_str)).unwrap();
+            let path_mesh = path.into();
+            meshes.push(path_mesh);
+        }
         let mesh_handles = renderer.load_meshes(&meshes).unwrap();
         self.meshes.insert("fill", mesh_handles[0]);
         self.meshes.insert("wire", mesh_handles[1]);
+        if let Some(_) = PATH_PATH {
+            self.meshes.insert("path", mesh_handles[2]);
+        }
         let scene = Scene::load(&Path::new(SCENE_PATH)).unwrap();
         let octree = Octtree::build::<DisallowInterior>(&scene, 0, 6);
         let grid = Grid::build::<DisallowInterior>(&scene, 1.0);
@@ -238,7 +248,12 @@ impl ApplicationHandler for Application {
                     ),
                     _ => (),
                 }
-
+                if let Some(_) = PATH_PATH {
+                    let _ = renderer.draw_mesh::<LineList>(
+                        *self.meshes.get(&"path").unwrap(),
+                        &Matrix4::default(),
+                    );
+                }
                 let _ = renderer.end_frame();
                 self.window.as_ref().unwrap().request_redraw();
             }

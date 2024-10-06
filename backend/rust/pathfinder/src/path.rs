@@ -8,8 +8,9 @@ pub use octtree::*;
 
 use crate::{math::vector::Vector3, scene::Bounds, utility::GenError};
 
+#[derive(Debug)]
 pub struct PathfindingPath {
-    points: Vec<Vector3>,
+    pub points: Vec<Vector3>,
 }
 
 impl PathfindingPath {

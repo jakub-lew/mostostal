@@ -2,7 +2,7 @@ mod vertex;
 
 pub use vertex::*;
 
-use crate::math::vector::Vector3;
+use crate::{math::vector::Vector3, path::PathfindingPath};
 
 pub struct Mesh {
     pub(crate) vertices: Vec<Vertex>,
@@ -119,4 +119,36 @@ pub fn cube_solid() -> Mesh {
     ];
 
     Mesh { vertices, indices }
+}
+
+impl From<PathfindingPath> for Mesh {
+    fn from(value: PathfindingPath) -> Self {
+        let mut vertices = Vec::new();
+        let mut indices = Vec::new();
+
+        for i in 0..value.points.len() - 1 {
+            let start = &value.points[i];
+            let end = &value.points[i + 1];
+
+            let start_vertex = Vertex {
+                pos: Vector3::new(start.x, start.y, start.z),
+                color: Vector3::new(1.0, 1.0, 1.0),
+            };
+            let end_vertex = Vertex {
+                pos: Vector3::new(end.x, end.y, end.z),
+                color: Vector3::new(1.0, 1.0, 1.0),
+            };
+
+            vertices.push(start_vertex);
+            vertices.push(end_vertex);
+
+            let start_index = (i * 2) as u32;
+            let end_index = start_index + 1;
+
+            indices.push(start_index);
+            indices.push(end_index);
+        }
+
+        Mesh { vertices, indices }
+    }
 }
