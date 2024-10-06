@@ -186,12 +186,13 @@ export class GridGen {
             }
         });
         const nodesExport = graph.nodes.map((node) => {
-            const coords = this.idxToCoords(graph.xNumber, graph.yNumber, node.nr);
+            const coords =  this.idxToCoords(graph.xNumber, graph.yNumber, node.nr);
+   
             return {
                 nodeNr: node.nr,
-                x: coords[0],
-                y: coords[1],
-                z: coords[2],
+                x: node.x,
+                y: node.y,
+                z: node.z,
             }
         });
 
@@ -330,6 +331,9 @@ export class GridGen {
 }
 //console.log(GridGen.DuplexToLines());
 // const obj = GridGen.DuplexToNodes();
-const obj = GridGen.BuildingToLines();
+//const obj = GridGen.BuildingToLines();
+const graph = GridGen.BuildingToGraph();
+const json = GridGen.exportToJSON(graph);
+const a = true;
 
 //console.log(GridGen.exportToJSON(GridGen.generateGrid([5, 5, 5], 10, 2, 2, 2)))

@@ -52,9 +52,9 @@ export class GridGen {
             const coords = this.idxToCoords(graph.xNumber, graph.yNumber, node.nr);
             return {
                 nodeNr: node.nr,
-                x: coords[0],
-                y: coords[1],
-                z: coords[2],
+                x: node.x,
+                y: node.y,
+                z: node.z,
             };
         });
         const edgesExport = graph.edges.map((edge) => {
@@ -312,6 +312,9 @@ GridGen.generateGrid = (origin, span, xNumber, yNumber, zNumber, realX, realY, r
 };
 //console.log(GridGen.DuplexToLines());
 // const obj = GridGen.DuplexToNodes();
-const obj = GridGen.BuildingToLines();
+//const obj = GridGen.BuildingToLines();
+const graph = GridGen.BuildingToGraph();
+const json = GridGen.exportToJSON(graph);
+const a = true;
 //console.log(GridGen.exportToJSON(GridGen.generateGrid([5, 5, 5], 10, 2, 2, 2)))
 //# sourceMappingURL=gridGen.js.map

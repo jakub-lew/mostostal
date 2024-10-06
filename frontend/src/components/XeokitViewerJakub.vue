@@ -103,7 +103,7 @@ let lines = [
      for(const obstacle of obstaclesBoxes){
         let min = obstacle.min;
         let max = obstacle.max;
-       drawBox(min, max);
+       //drawBox(min, max);
      }
 
 
@@ -148,7 +148,7 @@ let lines = [
     //     }
     //  });
     //  console.log(pathLines);
-    for (const line of [graphLines].flat()) {
+    for (const line of [lines].flat()) {
     new Mesh(viewer.scene, {
         geometry: new ReadableGeometry(viewer.scene, buildLineGeometry({
             startPoint: line.startPoint,
