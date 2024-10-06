@@ -5,9 +5,6 @@ use crate::{
 
 use super::VoxelStrategy;
 
-const MIN_DEPTH: u32 = 0;
-const MAX_DPETH: u32 = 4;
-
 struct Node {
     depth: u32,
     bounds: Bounds,

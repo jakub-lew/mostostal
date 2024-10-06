@@ -58,7 +58,6 @@ impl Bounds {
 
     pub fn planes(&self) -> Vec<Bounds> {
         let mut planes = Vec::new();
-        let dimensions = self.dimensions();
 
         // Bottom and top planes
         planes.push(Bounds::new(

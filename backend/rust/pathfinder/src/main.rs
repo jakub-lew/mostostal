@@ -7,7 +7,7 @@ use pathfinder::{
         vector::{Vector3, Vector4},
     },
     mesh,
-    path::{AllowInterior, DisallowInterior, Grid, Neg, Octtree, PathfindingPath},
+    path::{DisallowInterior, Grid, Octtree, PathfindingPath},
     scene::Scene,
 };
 use std::{collections::HashMap, error::Error, path::Path, time::Instant};
@@ -23,12 +23,16 @@ use winit::{
 const GRID_TYPES: &'static [&'static str] = &["grid", "grid_neg", "octtree"];
 const SHADER_TYPES: &'static [&'static str] = &["none", "wire", "fill"];
 
-// const SCENE_PATH: &'static str = &"../../../frontend/server/models/Duplex_boxes.json";
-// const PATH_PATH: Option<&'static str> = None;
+const SCENE_PATH: &'static str = &"../../../frontend/server/models/Duplex_boxes.json";
+const PATH_PATH: Option<&'static str> = None;
 
-const PATH_PATH: Option<&'static str> = Some(&"../../../backend/pathfinder/4.json");
-const SCENE_PATH: &'static str = &"../../../frontend/server/models/BUILDING_boxes.json";
+// const PATH_PATH: Option<&'static str> = Some(&"../../../backend/pathfinder/4.json");
+// const SCENE_PATH: &'static str = &"../../../frontend/server/models/BUILDING_boxes.json";
 
+const LINE_WIDTH: f32 = 2.0;
+const PIPE_WIDTH: f32 = 4.0;
+const CAMERA_SPEED: f32 = 12.0f32;
+const MOUSE_SENSITIVITY: f64 = 0.5;
 enum CursorState {
     Free,
     Lock,
@@ -70,6 +74,7 @@ impl ApplicationHandler for Application {
                     WindowAttributes::default()
                         .with_resizable(false)
                         .with_enabled_buttons(WindowButtons::CLOSE | WindowButtons::MINIMIZE)
+                        .with_maximized(true)
                         .with_inner_size(LogicalSize::new(1920, 1080))
                         .with_title("Pathfinder"),
                 )
@@ -109,10 +114,12 @@ impl ApplicationHandler for Application {
         self.instances.insert("octtree", octree_instances);
         self.instances.insert("grid", grid_instances);
         self.instances.insert("grid_neg", grid_neg_instances);
-        let proj = Matrix4::perspective(std::f32::consts::FRAC_PI_3, 600.0 / 800.0, 1e-3, 1e3);
+        let proj = Matrix4::perspective(std::f32::consts::FRAC_PI_3, 1080.0 / 1920.0, 1e-3, 1e3);
         let mut camera = Camera::new(proj);
-        camera.set_position(Vector3::new(2.0, 2.0, 2.0));
-        camera.set_forward(-Vector3::new(2.0, 2.0, 2.0));
+        // camera.set_position(Vector3::new(2.0, 2.0, 2.0));
+        // camera.set_forward(-Vector3::new(2.0, 2.0, 2.0));
+        camera.set_position(scene.bounds.max + scene.bounds.dimensions() / 2.0);
+        camera.set_forward(-(scene.bounds.max - scene.bounds.min));
         self.camera = Some(camera);
         self.selected_grid = 0;
         self.selected_shader = 0;
@@ -138,7 +145,6 @@ impl ApplicationHandler for Application {
                         KeyCode::KeyA => dir - camera.right,
                         _ => dir,
                     });
-                const CAMERA_SPEED: f32 = 4.0f32;
                 if camera_update.length() > 1e-4 {
                     let camera_update = CAMERA_SPEED * self.delta_time * camera_update.norm();
                     camera.update_position(camera_update);
@@ -161,7 +167,6 @@ impl ApplicationHandler for Application {
         match event {
             DeviceEvent::MouseMotion { delta } => {
                 if let CursorState::Lock = self.cursor_state {
-                    const MOUSE_SENSITIVITY: f64 = 0.5;
                     let delta = (delta.0 * MOUSE_SENSITIVITY, delta.1 * MOUSE_SENSITIVITY);
                     camera.update_rotation(delta);
                 }
@@ -189,10 +194,10 @@ impl ApplicationHandler for Application {
                         }
                     }
                 }
-                KeyCode::ArrowRight => {
+                KeyCode::ArrowLeft => {
                     self.selected_shader = (self.selected_shader + 1) % SHADER_TYPES.len()
                 }
-                KeyCode::ArrowDown => {
+                KeyCode::ArrowRight => {
                     self.selected_grid = (self.selected_grid + 1) % GRID_TYPES.len()
                 }
                 _ => (),
@@ -231,14 +236,14 @@ impl ApplicationHandler for Application {
                     *self.meshes.get(&"wire").unwrap(),
                     *self.instances.get(&"scene").unwrap(),
                     Vector4::new(1.0, 0.0, 0.0, 1.0),
-                    1.0,
+                    LINE_WIDTH,
                 );
                 match SHADER_TYPES[self.selected_shader] {
                     "wire" => renderer.draw_mesh_instanced::<LineList>(
                         *self.meshes.get(&"wire").unwrap(),
                         *self.instances.get(GRID_TYPES[self.selected_grid]).unwrap(),
                         Vector4::new(0.1, 0.1, 0.0, 0.5),
-                        1.0,
+                        LINE_WIDTH,
                     ),
                     "fill" => renderer.draw_mesh_instanced::<TriangleList>(
                         *self.meshes.get(&"fill").unwrap(),
@@ -252,6 +257,7 @@ impl ApplicationHandler for Application {
                     let _ = renderer.draw_mesh::<LineList>(
                         *self.meshes.get(&"path").unwrap(),
                         &Matrix4::default(),
+                        PIPE_WIDTH,
                     );
                 }
                 let _ = renderer.end_frame();

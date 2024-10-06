@@ -1,5 +1,3 @@
-use std::cell;
-
 use crate::{
     math::{matrix::Matrix4, vector::Vector3},
     scene::{Bounds, Scene},
@@ -10,7 +8,7 @@ use super::VoxelStrategy;
 pub struct Grid {
     num_rows: usize,
     num_cols: usize,
-    num_layers: usize,
+    _num_layers: usize,
     cells: Vec<bool>,
     cell_size: f32,
     bounds: Bounds,
@@ -37,7 +35,7 @@ impl Grid {
         Self {
             num_rows,
             num_cols,
-            num_layers,
+            _num_layers: num_layers,
             cells,
             cell_size,
             bounds,
