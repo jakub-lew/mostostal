@@ -3,6 +3,7 @@ import { XKTLoaderPlugin, WebIFCLoaderPlugin } from '@xeokit/xeokit-sdk';
 import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import {buildLineGeometry, buildBoxGeometry, buildSphereGeometry, Viewer, Mesh, ReadableGeometry, PhongMaterial} from '@xeokit/xeokit-sdk';
+import {ContextMenu,  buildCylinderGeometry, math, transformToNode} from '@xeokit/xeokit-sdk';
 import { GridGen} from '../../../backend/jakub/gridGen';
 import { aStarClass } from '../../../backend/jakub/aStar';
 import * as data from '../../../backend/jakub/exampleForTomek.json';
@@ -29,6 +30,56 @@ onMounted(() => {
     viewer.camera.eye = [0, 0, 8];
     viewer.camera.look = [0, 0, 0];
     viewer.camera.up = [0, 1, 0];
+    const scene = viewer.scene;
+    const canvas = scene.canvas.canvas;
+
+const buildPipe = function(segments) {
+    // straight cylinders without elbows
+    const elements = segments.map(
+        function(segment) {
+            const p0 = segment[0];
+            const p1 = segment[1];
+            const rad = 0.1;
+            const pipe = new Mesh(
+                scene,
+                {
+                    geometry: new ReadableGeometry(
+                        scene,
+                        buildCylinderGeometry({
+                            center: [0,0,0],
+                            radiusTop: rad,
+                            radiusBottom: rad,
+                            heightSegments: 60,
+                            widthSegments: 60
+                        })),
+                    material: new PhongMaterial(scene, { diffuse: [0,0,1] }),
+                    pickable: false
+                });
+
+            const mat = math.identityMat4();
+
+            math.scaleMat4v([ 1, math.distVec3(p0, p1), 1], mat);
+
+            const dir = math.vec3();
+            math.subVec3(p0, p1, dir);
+            math.normalizeVec3(dir);
+            const r = math.vec4();
+            math.vec3PairToQuaternion([ 0, 1, 0 ], dir, r);
+            math.mulMat4(math.quaternionToRotationMat4(r, math.identityMat4()), mat, mat);
+
+            const t = math.vec3();
+            math.addVec3(p0, p1, t);
+            math.mulVec3Scalar(t, 0.5, t);
+
+            math.translateMat4v(t, mat);
+
+            pipe.matrix = mat;
+
+            return pipe;
+        });
+    return { destroy: () => elements.forEach(e => e.destroy()) };
+};
+buildPipe([[[0,0,0], [10,10,10]]]);
 
     //------------------------------------------------------------------------------------------------------------------
     // Create a mesh with simple 2d line shape
@@ -207,14 +258,14 @@ let lines = [
 
 
 
-    const xktLoader = new XKTLoaderPlugin(viewer);
+    // const xktLoader = new XKTLoaderPlugin(viewer);
 
-    const sceneModel = xktLoader.load({
-        id: "myModel",
-        src: `http://127.0.0.1:5200/BUILDING.xkt`,
-        edges: true,
-    });
-    sceneModel.xrayed = true;
+    // const sceneModel = xktLoader.load({
+    //     id: "myModel",
+    //     src: `http://127.0.0.1:5200/BUILDING.xkt`,
+    //     edges: true,
+    // });
+    // sceneModel.xrayed = true;
 
 });
 
