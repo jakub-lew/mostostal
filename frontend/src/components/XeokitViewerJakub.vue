@@ -10,6 +10,7 @@ import * as data from '../../../backend/jakub/exampleForTomek.json';
 //import * as obstacles from '../../../backend/dawid/bboxes-global-coordinates.json';
 import * as obstacles from '../../../frontend/server/models/BUILDING_boxes_simple.json';
 // import * as obstacles from '../../../frontend/server/models/Duplex_boxes.json';
+import * as pathJSON from '../../../frontend/server/models/0.json';
 import { checkLine } from '@/utils/check-line';
 import { Result } from 'postcss';
 import ColorPicker from 'primevue/colorpicker';
@@ -79,7 +80,15 @@ const buildPipe = function(segments) {
         });
     return { destroy: () => elements.forEach(e => e.destroy()) };
 };
-buildPipe([[[0,0,0], [10,10,10]]]);
+//buildPipe([[[0,0,0], [10,10,10]]]);
+for(let idx = 0; idx < pathJSON.points.length - 2; idx++){
+    let startPoint = pathJSON.points[idx];
+    let endPoint = pathJSON.points[idx + 1];
+    startPoint = [startPoint[0], startPoint[2], -startPoint[1]];
+    endPoint = [endPoint[0], endPoint[2], -endPoint[1]];
+    buildPipe([[startPoint, endPoint]]);
+}
+
 
     //------------------------------------------------------------------------------------------------------------------
     // Create a mesh with simple 2d line shape
@@ -214,7 +223,9 @@ let lines = [
      });
 
     // const path = aStarClass.test();
-    // let pathLines = [];
+    //  let pathLines = [];
+     const path = aStarClass.main(graph, 817, 1558);
+
     // //ITERATE over idx
     // for (let i = 0; i < path.length - 2; i++) {
     //     const line = {
@@ -229,8 +240,8 @@ let lines = [
     //         endPoint: [line.endPoint[0], line.endPoint[2], -line.endPoint[1]]
     //     }
     //  });
-    //  console.log(pathLines);
-    for (const line of [lines].flat()) {
+     //console.log(pathLines);
+    for (const line of [graphLines].flat()) {
     new Mesh(viewer.scene, {
         geometry: new ReadableGeometry(viewer.scene, buildLineGeometry({
             startPoint: line.startPoint,
@@ -258,14 +269,14 @@ let lines = [
 
 
 
-    // const xktLoader = new XKTLoaderPlugin(viewer);
+    const xktLoader = new XKTLoaderPlugin(viewer);
 
-    // const sceneModel = xktLoader.load({
-    //     id: "myModel",
-    //     src: `http://127.0.0.1:5200/BUILDING.xkt`,
-    //     edges: true,
-    // });
-    // sceneModel.xrayed = true;
+    const sceneModel = xktLoader.load({
+        id: "myModel",
+        src: `http://127.0.0.1:5200/BUILDING.xkt`,
+        edges: true,
+    });
+    sceneModel.xrayed = true;
 
 });
 
