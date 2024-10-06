@@ -1,4 +1,5 @@
-import obstacles from './../../frontend/server/models/Duplex_boxes.json' assert { type: "json" };
+// import obstacles from './../../frontend/server/models/Duplex_boxes.json' assert { type: "json" };
+import obstacles from './../../frontend/server/models/Building_boxes.json' assert { type: "json" };
 export class GridGen {
     static test() {
         // create neighbors
@@ -169,6 +170,14 @@ export class GridGen {
         });
         return nodes;
     }
+    static BuildingToGraph() {
+        return GridGen.createGrid(obstacles.roomBBox, obstacles.obstacleBBoxes, 2);
+    }
+    static BuildingToLines() {
+        const graph = this.BuildingToGraph();
+        const lines = GridGen.graphEdgesToLines(graph);
+        return lines;
+    }
 }
 GridGen.coordsToIdx = (x, y, z, xNumber, yNumber) => (x, y, z) => x + y * xNumber + z * xNumber * yNumber;
 GridGen.idxToCoords = (xNumber, yNumber, idx) => {
@@ -294,7 +303,7 @@ GridGen.generateGrid = (origin, span, xNumber, yNumber, zNumber) => {
     return graph;
 };
 //console.log(GridGen.DuplexToLines());
-const obj = GridGen.DuplexToNodes();
-const br = true;
+// const obj = GridGen.DuplexToNodes();
+const obj = GridGen.BuildingToLines();
 //console.log(GridGen.exportToJSON(GridGen.generateGrid([5, 5, 5], 10, 2, 2, 2)))
 //# sourceMappingURL=gridGen.js.map

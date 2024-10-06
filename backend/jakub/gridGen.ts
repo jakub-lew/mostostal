@@ -1,5 +1,6 @@
 import { Graph, GraphNode, Edge, BBox } from './interfaces.js'
-import obstacles from './../../frontend/server/models/Duplex_boxes.json' assert { type: "json" };
+// import obstacles from './../../frontend/server/models/Duplex_boxes.json' assert { type: "json" };
+import obstacles from './../../frontend/server/models/Building_boxes.json' assert { type: "json" };
 export class GridGen {
     static coordsToIdx = (x: number, y: number, z: number, xNumber: number, yNumber: number) => (x: number, y: number, z: number) => x + y * xNumber + z * xNumber * yNumber;
     static idxToCoords = (xNumber: number, yNumber: number, idx: number) => {
@@ -309,9 +310,17 @@ export class GridGen {
         });
         return nodes;
     }
+    static BuildingToGraph(){
+        return GridGen.createGrid(obstacles.roomBBox, obstacles.obstacleBBoxes, 2);
+    }
+    static BuildingToLines() {
+        const graph = this.BuildingToGraph();
+        const lines = GridGen.graphEdgesToLines(graph);
+        return lines;
+    }
 }
 //console.log(GridGen.DuplexToLines());
-const obj = GridGen.DuplexToNodes();
-const br = true;
+// const obj = GridGen.DuplexToNodes();
+const obj = GridGen.BuildingToLines();
 
 //console.log(GridGen.exportToJSON(GridGen.generateGrid([5, 5, 5], 10, 2, 2, 2)))

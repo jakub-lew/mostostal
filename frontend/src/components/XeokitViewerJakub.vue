@@ -7,8 +7,8 @@ import { GridGen} from '../../../backend/jakub/gridGen';
 import { aStarClass } from '../../../backend/jakub/aStar';
 import * as data from '../../../backend/jakub/exampleForTomek.json';
 //import * as obstacles from '../../../backend/dawid/bboxes-global-coordinates.json';
-// import * as obstacles from '../../../frontend/server/models/BUILDING_boxes.json';
-import * as obstacles from '../../../frontend/server/models/Duplex_boxes.json';
+import * as obstacles from '../../../frontend/server/models/BUILDING_boxes.json';
+// import * as obstacles from '../../../frontend/server/models/Duplex_boxes.json';
 import { checkLine } from '@/utils/check-line';
 import { Result } from 'postcss';
 import ColorPicker from 'primevue/colorpicker';
@@ -80,7 +80,7 @@ let lines = [
         }
      });
 
-     let graphLines = GridGen.DuplexToLines();
+     let graphLines = GridGen.BuildingToLines();
      graphLines = graphLines.map((line) => {
         return {
             startPoint: [line.startPoint[0], line.startPoint[2], -line.startPoint[1]],
@@ -94,24 +94,24 @@ let lines = [
         return checkLine(line.startPoint as [number, number, number], line.endPoint as [number, number, number] , 0.03);
      });
 
-    const path = aStarClass.test();
-    let pathLines = [];
-    //ITERATE over idx
-    for (let i = 0; i < path.length - 2; i++) {
-        const line = {
-            startPoint: path[i],
-            endPoint: path[i + 1]
-        };
-        pathLines.push(line);
-    }
-    pathLines = pathLines.map((line) => {
-        return {
-            startPoint: [line.startPoint[0], line.startPoint[2], -line.startPoint[1]],
-            endPoint: [line.endPoint[0], line.endPoint[2], -line.endPoint[1]]
-        }
-     });
-     console.log(pathLines);
-    for (const line of [pathLines/*lines,  graphLines*/ ].flat()) {
+    // const path = aStarClass.test();
+    // let pathLines = [];
+    // //ITERATE over idx
+    // for (let i = 0; i < path.length - 2; i++) {
+    //     const line = {
+    //         startPoint: path[i],
+    //         endPoint: path[i + 1]
+    //     };
+    //     pathLines.push(line);
+    // }
+    // pathLines = pathLines.map((line) => {
+    //     return {
+    //         startPoint: [line.startPoint[0], line.startPoint[2], -line.startPoint[1]],
+    //         endPoint: [line.endPoint[0], line.endPoint[2], -line.endPoint[1]]
+    //     }
+    //  });
+    //  console.log(pathLines);
+    for (const line of [graphLines].flat()) {
     new Mesh(viewer.scene, {
         geometry: new ReadableGeometry(viewer.scene, buildLineGeometry({
             startPoint: line.startPoint,
@@ -141,7 +141,7 @@ let lines = [
 
     const sceneModel = xktLoader.load({
         id: "myModel",
-        src: `http://127.0.0.1:5200/Duplex.xkt`,
+        src: `http://127.0.0.1:5200/BUILDING.xkt`,
         edges: true,
     });
     sceneModel.xrayed = true;
