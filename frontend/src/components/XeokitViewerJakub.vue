@@ -7,7 +7,7 @@ import { GridGen} from '../../../backend/jakub/gridGen';
 import { aStarClass } from '../../../backend/jakub/aStar';
 import * as data from '../../../backend/jakub/exampleForTomek.json';
 //import * as obstacles from '../../../backend/dawid/bboxes-global-coordinates.json';
-import * as obstacles from '../../../frontend/server/models/BUILDING_boxes.json';
+import * as obstacles from '../../../frontend/server/models/BUILDING_boxes_simple.json';
 // import * as obstacles from '../../../frontend/server/models/Duplex_boxes.json';
 import { checkLine } from '@/utils/check-line';
 import { Result } from 'postcss';
@@ -82,9 +82,13 @@ let lines = [
         }
      }
 
-     const drawBox = (min_ : number[], max_: number[]) => {
-        let min = [min_[0], min_[2], -min_[1]];
-        let max = [max_[0], max_[2], -max_[1]];
+     const drawBox = (min_ : number[], max_: number[], transform = true) => {
+      let min = min_;
+      let max = max_;
+      if(transform){
+         min = [min_[0], min_[2], -min_[1]];
+         max = [max_[0], max_[2], -max_[1]];
+      }
         new Mesh(viewer.scene, {
             geometry: new ReadableGeometry(viewer.scene, buildBoxGeometry({
                 center: [0.5*(min[0]+max[0]), 0.5*(min[1]+max[1]), 0.5*(min[2]+max[2])],
@@ -99,13 +103,40 @@ let lines = [
               })
             });
      }
+     const drawSmallBox= (center : [number,number, number], transform = true) => {
+      const min = [center[0] - 0.5, center[1] - 0.5, center[2] - 0.5];
+      const max = [center[0] + 0.5, center[1] + 0.5, center[2] + 0.5];
+      drawBox(min, max, transform);
+     }
 
      for(const obstacle of obstaclesBoxes){
         let min = obstacle.min;
         let max = obstacle.max;
-       //drawBox(min, max);
+       drawBox(min, max);
      }
 
+     //drawSmallBox([0.5745122832679534, 6.390988588399216, 0.12019529864528122], false);
+     //drawSmallBox([35.36324052388949, 7.771697169878537,-17.973580836785477], false);
+     drawSmallBox([1.45, 1.25, 5.34]);
+      drawSmallBox([37.16, 14.86, 8.74]);
+
+ //START
+//  {
+//         "nodeNr": 817,
+//         "x": 1.4596782297912037,
+//         "y": 1.255766270208801,
+//         "z": 5.34
+//       },
+//END
+// {
+//         "nodeNr": 1558,
+//         "x": 37.1596782297912,
+//         "y": 14.8557662702088,
+//         "z": 8.739999999999998
+//       },
+
+    //  [0.5745122832679534, -0.12019529864528122, 6.390988588399216] // node
+    //  [35.36324052388949, 17.973580836785477, 7.771697169878537]
 
 
      lines = lines.map((line) => {
