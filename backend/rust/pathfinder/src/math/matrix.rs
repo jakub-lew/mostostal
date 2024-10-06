@@ -133,6 +133,16 @@ impl Matrix4 {
         )
         .into()
     }
+
+    #[inline]
+    pub fn scale(scale: Vector3) -> Matrix4 {
+        Matrix3::new(
+            scale.x * Vector3::x(),
+            scale.y * Vector3::y(),
+            scale.z * Vector3::z(),
+        )
+        .into()
+    }
 }
 
 impl Mul<Vector4> for Matrix4 {

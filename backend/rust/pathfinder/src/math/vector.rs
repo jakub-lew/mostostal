@@ -89,6 +89,12 @@ impl Vector3 {
             z: roll,
         }
     }
+
+    #[inline]
+    pub fn as_bytes(&self) -> &[u8] {
+        let ptr: *const u8 = (&self.x as *const f32).cast();
+        unsafe { std::slice::from_raw_parts(ptr, size_of::<Self>()) }
+    }
 }
 
 impl Add for Vector3 {
@@ -249,6 +255,12 @@ impl Vector4 {
     #[inline]
     pub const fn new(x: f32, y: f32, z: f32, w: f32) -> Self {
         Vector4 { x, y, z, w }
+    }
+
+    #[inline]
+    pub fn as_bytes(&self) -> &[u8] {
+        let ptr: *const u8 = (&self.x as *const f32).cast();
+        unsafe { std::slice::from_raw_parts(ptr, size_of::<Self>()) }
     }
 }
 
