@@ -1,0 +1,11 @@
+[package]
+name = "pathfinder"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+ash = "0.38.0"
+ash-window = "0.13.0"
+colored = "2.1.0"
+serde = "1.0.210"
+winit = "0.30.5"
