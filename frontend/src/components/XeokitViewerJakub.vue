@@ -2,7 +2,7 @@
 import { XKTLoaderPlugin, WebIFCLoaderPlugin } from '@xeokit/xeokit-sdk';
 import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import {buildLineGeometry, buildSphereGeometry, Viewer, Mesh, ReadableGeometry, PhongMaterial} from '@xeokit/xeokit-sdk';
+import {buildLineGeometry, buildBoxGeometry, buildSphereGeometry, Viewer, Mesh, ReadableGeometry, PhongMaterial} from '@xeokit/xeokit-sdk';
 import { GridGen} from '../../../backend/jakub/gridGen';
 import { aStarClass } from '../../../backend/jakub/aStar';
 import * as data from '../../../backend/jakub/exampleForTomek.json';
@@ -63,16 +63,51 @@ let lines = [
     const room = obstacles.roomBBox;
     const span = 30;
 
+
+    let obstaclesBoxes = [];
      for(const obstacle of obstacles.obstacleBBoxes){
         const min = [obstacle.x, obstacle.y, obstacle.z];
         const max = [obstacle.x + obstacle.xDist, obstacle.y + obstacle.yDist, obstacle.z + obstacle.zDist];
+
+        obstaclesBoxes.push({
+            min: min,
+            max: max
+        });
+
+
         //startPoint and endPoints are diagonal of box. Create 6 lines to create box
         const bboxLines = GridGen.BBoxesToLines(min, max);
         for(const line of bboxLines){
             lines.push(line);
         }
-
      }
+
+     const drawBox = (min_ : number[], max_: number[]) => {
+        let min = [min_[0], min_[2], -min_[1]];
+        let max = [max_[0], max_[2], -max_[1]];
+        new Mesh(viewer.scene, {
+            geometry: new ReadableGeometry(viewer.scene, buildBoxGeometry({
+                center: [0.5*(min[0]+max[0]), 0.5*(min[1]+max[1]), 0.5*(min[2]+max[2])],
+                  xSize: 0.5*(max[0] - min[0]),
+                  ySize: 0.5*(max[1] - min[1]),
+                  zSize: 0.5*(max[2] - min[2])
+
+            })),
+              material: new PhongMaterial(viewer.scene, {
+                  diffuse: [0.5, 0.5, 0.5],
+                  opacity: 0.5
+              })
+            });
+     }
+
+     for(const obstacle of obstaclesBoxes){
+        let min = obstacle.min;
+        let max = obstacle.max;
+      // drawBox(min, max);
+     }
+
+
+
      lines = lines.map((line) => {
         return {
             startPoint: [line.startPoint[0], line.startPoint[2], -line.startPoint[1]],
@@ -80,7 +115,9 @@ let lines = [
         }
      });
 
-     let graphLines = GridGen.BuildingToLines();
+
+     const graph = GridGen.createGrid(obstacles.roomBBox, obstacles.obstacleBBoxes, 1.7);
+     let graphLines =  GridGen.graphEdgesToLines(graph);
      graphLines = graphLines.map((line) => {
         return {
             startPoint: [line.startPoint[0], line.startPoint[2], -line.startPoint[1]],
@@ -136,6 +173,8 @@ let lines = [
 
         })
     });
+
+
 
     // const xktLoader = new XKTLoaderPlugin(viewer);
 
