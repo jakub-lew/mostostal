@@ -3,11 +3,28 @@ import { Graph, GraphNode, Edge, BBox } from './interfaces.js'
 import obstacles from './../../frontend/server/models/Building_boxes.json' assert { type: "json" };
 export class GridGen {
     static coordsToIdx = (x: number, y: number, z: number, xNumber: number, yNumber: number) => (x: number, y: number, z: number) => x + y * xNumber + z * xNumber * yNumber;
+    //following works only before scaling and translating:
     static idxToCoords = (xNumber: number, yNumber: number, idx: number) => {
         const x = idx % xNumber;
         const y = Math.floor(idx / xNumber) % yNumber;
         const z = Math.floor(idx / (xNumber * yNumber));
         return [x, y, z];
+    }
+    static nodeClosestToCoords = (graph: Graph, coords: [number, number, number]) => {
+        let closestNode = graph.nodes[0];
+        let minDist = Number.MAX_SAFE_INTEGER;
+        for (const node of graph.nodes) {
+            const dist = Math.sqrt(
+                Math.pow(node.x - coords[0], 2) +
+                Math.pow(node.y - coords[1], 2) +
+                Math.pow(node.z - coords[2], 2)
+            );
+            if (dist < minDist) {
+                minDist = dist;
+                closestNode = node;
+            }
+        }
+        return closestNode;
     }
     static generateGrid = (origin: [number, number, number], span: number, xNumber: number, yNumber: number, zNumber: number, realX: number, realY: number, realZ: number) => {  
         const INF = Number.MAX_SAFE_INTEGER;
@@ -238,6 +255,7 @@ export class GridGen {
         const zNumber = Math.floor(room.zDist / span);
         const graph = this.generateGrid([room.x, room.y, room.z], span, xNumber, yNumber, zNumber, room.xDist, room.yDist, room.zDist);
         const edgesToDel: Edge[] = [];
+        console.log(`Checking for edges that intersect obstacles`);
         for (const edge of graph.edges) {
             const start = [graph.nodes[edge.nodesPair[0]].x, graph.nodes[edge.nodesPair[0]].y, graph.nodes[edge.nodesPair[0]].z];
             const end = [graph.nodes[edge.nodesPair[1]].x, graph.nodes[edge.nodesPair[1]].y, graph.nodes[edge.nodesPair[1]].z];
@@ -257,6 +275,7 @@ export class GridGen {
                 // }
             }
         }
+        console.log(`Affected edges found. Removing  ${edgesToDel.length} edges from the grid`);
         while (edgesToDel.length > 0) {
             const edge = edgesToDel.pop();
             edge?.nodesPair.forEach((nodeNr) => {
@@ -267,6 +286,7 @@ export class GridGen {
             graph.edges = graph.edges.filter((e) => e != edge);
 
         }
+        console.log(`removed edges`);
         return graph;
     }
     static exampleGraphWithHoles() {

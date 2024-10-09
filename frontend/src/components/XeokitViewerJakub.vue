@@ -189,7 +189,7 @@ for(let idx = 0; idx < pathJSON.points.length - 1; idx++){
      });
 
 
-     const graph = GridGen.createGrid(obstacles.roomBBox, obstacles.obstacleBBoxes, 1.7);
+     const graph = GridGen.createGrid(obstacles.roomBBox, obstacles.obstacleBBoxes, 1);
 
      lines = lines.filter((line) => {
         return checkLine(line.startPoint as [number, number, number], line.endPoint as [number, number, number] , 0.03);
@@ -198,7 +198,10 @@ for(let idx = 0; idx < pathJSON.points.length - 1; idx++){
 
     // const path = aStarClass.test();
      let pathLines = [];
-     const path = aStarClass.main(graph, 817, 1558);
+     //following coordinates span the building across its diagonal
+     const startNode = GridGen.nodeClosestToCoords(graph, [1.45, 1.25, 5.34]);
+     const endNode = GridGen.nodeClosestToCoords(graph, [37.16, 14.86, 8.74]);
+     const path = aStarClass.main(graph, startNode.nr, endNode.nr);
 
     // //ITERATE over idx
     for (let i = 0; i < path.length - 1; i++) {
@@ -226,7 +229,7 @@ for(let idx = 0; idx < pathJSON.points.length - 1; idx++){
      });
     console.log(`pathLines ${pathLines}`);
     for (const line of [
-      graphLines,
+       graphLines,
       lines
     ].flat()) {
     new Mesh(viewer.scene, {
