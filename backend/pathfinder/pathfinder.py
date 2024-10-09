@@ -6,11 +6,12 @@ import math
 import logging
 
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger("pathfinder")
 
 
-DISTANCE = 0.5
+PREFERRED_HEIGHT = 10000
+A = 100000
 DIRECTIONS = [[1, 0, 0], [-1, 0, 0],
               [0, 1, 0], [0, -1, 0],
               [0, 0, 1], [0, 0, -1]]
@@ -45,11 +46,9 @@ class Node:
 
 
 def calculate_penalty(octree, node_a, node_b):
-    """
-    Here deviation from from expected height should be penalized.
-    CalculateGCost
-    """
-    return 0
+    z = octree[node_b].z
+    penalty = A*abs(z - PREFERRED_HEIGHT)
+    return penalty
 
 
 def extend_node(octree, current_node, step, direction_vector):
@@ -82,8 +81,8 @@ def search_neighbors(octree, current,
             trial = extend_node(octree, current, step, direction)
             if trial is None:
                 break
-            if calculate_penalty(octree, current, valid) \
-               < calculate_penalty(octree, current, trial):
+            elif calculate_penalty(octree, current, valid) \
+                    > calculate_penalty(octree, current, trial):
                 valid = trial
             else:
                 valid = trial

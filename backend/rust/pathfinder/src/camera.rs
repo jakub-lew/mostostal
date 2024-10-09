@@ -40,7 +40,6 @@ impl Camera {
         self.euler.x = ((self.euler.x - delta_yaw) / (2.0 * PI)).fract() * (2.0 * PI);
         self.forward = Vector3::from_euler(self.euler.x, self.euler.y, self.euler.z);
         self.right = self.forward.cross(UP).norm();
-        println!("{:?}", self.forward);
     }
 
     pub fn update_position(&mut self, offset: Vector3) {
