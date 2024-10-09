@@ -81,32 +81,14 @@ const buildPipe = function(segments) {
     return { destroy: () => elements.forEach(e => e.destroy()) };
 };
 //buildPipe([[[0,0,0], [10,10,10]]]);
-for(let idx = 0; idx < pathJSON.points.length - 2; idx++){
+for(let idx = 0; idx < pathJSON.points.length - 1; idx++){
     let startPoint = pathJSON.points[idx];
     let endPoint = pathJSON.points[idx + 1];
     startPoint = [startPoint[0], startPoint[2], -startPoint[1]];
     endPoint = [endPoint[0], endPoint[2], -endPoint[1]];
-    buildPipe([[startPoint, endPoint]]);
+    //buildPipe([[startPoint, endPoint]]);
 }
 
-
-    //------------------------------------------------------------------------------------------------------------------
-    // Create a mesh with simple 2d line shape
-    //------------------------------------------------------------------------------------------------------------------
-let lines = [
-    {
-        startPoint: [-5,-2,0],
-        endPoint: [-5,2,0],
-    },
-    {
-        startPoint: [-5,2,0],
-        endPoint: [5,2,0],
-    },
-    {
-        startPoint: [5,2,0],
-        endPoint: [5,-2,0],
-    }
-];
 //lines = GridGen.test();
 // lines = [];
 // const linesJson = data;
@@ -123,7 +105,7 @@ let lines = [
     const room = obstacles.roomBBox;
     const span = 30;
 
-
+    let lines = [];
     let obstaclesBoxes = [];
      for(const obstacle of obstacles.obstacleBBoxes){
         const min = [obstacle.x, obstacle.y, obstacle.z];
@@ -172,7 +154,7 @@ let lines = [
      for(const obstacle of obstaclesBoxes){
         let min = obstacle.min;
         let max = obstacle.max;
-       drawBox(min, max);
+        drawBox(min, max);
      }
 
      //drawSmallBox([0.5745122832679534, 6.390988588399216, 0.12019529864528122], false);
@@ -208,40 +190,45 @@ let lines = [
 
 
      const graph = GridGen.createGrid(obstacles.roomBBox, obstacles.obstacleBBoxes, 1.7);
-     let graphLines =  GridGen.graphEdgesToLines(graph);
-     graphLines = graphLines.map((line) => {
+
+     lines = lines.filter((line) => {
+        return checkLine(line.startPoint as [number, number, number], line.endPoint as [number, number, number] , 0.03);
+     });
+
+
+    // const path = aStarClass.test();
+     let pathLines = [];
+     const path = aStarClass.main(graph, 817, 1558);
+
+    // //ITERATE over idx
+    for (let i = 0; i < path.length - 1; i++) {
+        const line = {
+            startPoint: path[i],
+            endPoint: path[i + 1]
+        };
+        pathLines.push(line);
+    }
+    let graphLines =  GridGen.graphEdgesToLines(graph);
+     graphLines = graphLines.filter((line) => {
+        return checkLine(line.startPoint as [number, number, number], line.endPoint as [number, number, number] , 0.03);
+     });
+    graphLines = graphLines.map((line) => {
         return {
             startPoint: [line.startPoint[0], line.startPoint[2], -line.startPoint[1]],
             endPoint: [line.endPoint[0], line.endPoint[2], -line.endPoint[1]]
         }
      });
-     lines = lines.filter((line) => {
-        return checkLine(line.startPoint as [number, number, number], line.endPoint as [number, number, number] , 0.03);
+    pathLines = pathLines.map((line) => {
+        return {
+            startPoint: [line.startPoint[0], line.startPoint[2], -line.startPoint[1]],
+            endPoint: [line.endPoint[0], line.endPoint[2], -line.endPoint[1]]
+        }
      });
-     graphLines = graphLines.filter((line) => {
-        return checkLine(line.startPoint as [number, number, number], line.endPoint as [number, number, number] , 0.03);
-     });
-
-    // const path = aStarClass.test();
-    //  let pathLines = [];
-     const path = aStarClass.main(graph, 817, 1558);
-
-    // //ITERATE over idx
-    // for (let i = 0; i < path.length - 2; i++) {
-    //     const line = {
-    //         startPoint: path[i],
-    //         endPoint: path[i + 1]
-    //     };
-    //     pathLines.push(line);
-    // }
-    // pathLines = pathLines.map((line) => {
-    //     return {
-    //         startPoint: [line.startPoint[0], line.startPoint[2], -line.startPoint[1]],
-    //         endPoint: [line.endPoint[0], line.endPoint[2], -line.endPoint[1]]
-    //     }
-    //  });
-     //console.log(pathLines);
-    for (const line of [graphLines].flat()) {
+    console.log(`pathLines ${pathLines}`);
+    for (const line of [
+      graphLines,
+      lines
+    ].flat()) {
     new Mesh(viewer.scene, {
         geometry: new ReadableGeometry(viewer.scene, buildLineGeometry({
             startPoint: line.startPoint,
@@ -251,6 +238,14 @@ let lines = [
             emissive: [0, 1,],
             opacity: 1        })
     });}
+
+    for(let idx = 0; idx < path.length - 1; idx++){
+      let startPoint = path[idx];
+      let endPoint = path[idx + 1];
+      startPoint = [startPoint[0], startPoint[2], -startPoint[1]];
+      endPoint = [endPoint[0], endPoint[2], -endPoint[1]];
+      buildPipe([[startPoint, endPoint]]);
+    }
 
 
 

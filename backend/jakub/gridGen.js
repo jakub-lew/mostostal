@@ -70,6 +70,24 @@ export class GridGen {
         };
         return JSON.stringify(graphToExport);
     }
+    static ifLineIntersectsBBox(start, end, bbox) {
+        const [minX, minY, minZ] = [bbox.x, bbox.y, bbox.z];
+        const [maxX, maxY, maxZ] = [bbox.x + bbox.xDist, bbox.y + bbox.yDist, bbox.z + bbox.zDist];
+        const [startX, startY, startZ] = start;
+        const [endX, endY, endZ] = end;
+        const t1 = (minX - startX) / (endX - startX);
+        const t2 = (maxX - startX) / (endX - startX);
+        const t3 = (minY - startY) / (endY - startY);
+        const t4 = (maxY - startY) / (endY - startY);
+        const t5 = (minZ - startZ) / (endZ - startZ);
+        const t6 = (maxZ - startZ) / (endZ - startZ);
+        const tMin = Math.max(Math.min(t1, t2), Math.min(t3, t4), Math.min(t5, t6));
+        const tMax = Math.min(Math.max(t1, t2), Math.max(t3, t4), Math.max(t5, t6));
+        if (tMax < 0 || tMin > tMax) {
+            return false;
+        }
+        return true;
+    }
     static createGrid(room, obstacles, span) {
         const xNumber = Math.floor(room.xDist / span);
         const yNumber = Math.floor(room.yDist / span);
@@ -80,20 +98,27 @@ export class GridGen {
             const start = [graph.nodes[edge.nodesPair[0]].x, graph.nodes[edge.nodesPair[0]].y, graph.nodes[edge.nodesPair[0]].z];
             const end = [graph.nodes[edge.nodesPair[1]].x, graph.nodes[edge.nodesPair[1]].y, graph.nodes[edge.nodesPair[1]].z];
             for (const obstacle of obstacles) {
-                if (start[0] >= obstacle.x && start[0] <= obstacle.x + obstacle.xDist &&
-                    start[1] >= obstacle.y && start[1] <= obstacle.y + obstacle.yDist &&
-                    start[2] >= obstacle.z && start[2] <= obstacle.z + obstacle.zDist) {
+                if (this.ifLineIntersectsBBox(start, end, obstacle)) {
                     edgesToDel.push(edge);
                 }
-                else if (end[0] >= obstacle.x && end[0] <= obstacle.x + obstacle.xDist &&
-                    end[1] >= obstacle.y && end[1] <= obstacle.y + obstacle.yDist &&
-                    end[2] >= obstacle.z && end[2] <= obstacle.z + obstacle.zDist) {
-                    edgesToDel.push(edge);
-                }
+                // if (start[0] >= obstacle.x && start[0] <= obstacle.x + obstacle.xDist &&
+                //     start[1] >= obstacle.y && start[1] <= obstacle.y + obstacle.yDist &&
+                //     start[2] >= obstacle.z && start[2] <= obstacle.z + obstacle.zDist) {
+                //     edgesToDel.push(edge);
+                // }
+                // else if (end[0] >= obstacle.x && end[0] <= obstacle.x + obstacle.xDist &&
+                //     end[1] >= obstacle.y && end[1] <= obstacle.y + obstacle.yDist &&
+                //     end[2] >= obstacle.z && end[2] <= obstacle.z + obstacle.zDist) {
+                //     edgesToDel.push(edge);
+                // }
             }
         }
         while (edgesToDel.length > 0) {
             const edge = edgesToDel.pop();
+            edge === null || edge === void 0 ? void 0 : edge.nodesPair.forEach((nodeNr) => {
+                const node = graph.nodes[nodeNr];
+                node.edges = node.edges.filter((e) => e != edge);
+            });
             graph.edges = graph.edges.filter((e) => e != edge);
         }
         return graph;
@@ -188,6 +213,7 @@ GridGen.idxToCoords = (xNumber, yNumber, idx) => {
 };
 GridGen.generateGrid = (origin, span, xNumber, yNumber, zNumber, realX, realY, realZ) => {
     const INF = Number.MAX_SAFE_INTEGER;
+    console.log(`Generating grid with origin ${origin}, span ${span}, xNumber ${xNumber}, yNumber ${yNumber}, zNumber ${zNumber}, realX ${realX}, realY ${realY}, realZ ${realZ}`);
     const graph = { nodes: [], edges: [], span: span, xNumber: xNumber, yNumber: yNumber, zNumber: zNumber };
     // create neighbors
     const coordsToIdx = (x, y, z) => x + y * xNumber + z * xNumber * yNumber;
@@ -308,6 +334,7 @@ GridGen.generateGrid = (origin, span, xNumber, yNumber, zNumber, realX, realY, r
     // const oldY = graph.yNumber;
     // graph.yNumber = graph.zNumber;
     // graph.zNumber = oldY;
+    console.log(`Generated grid with ${graph.nodes.length} nodes and ${graph.edges.length} edges`);
     return graph;
 };
 //console.log(GridGen.DuplexToLines());
